@@ -8,3 +8,6 @@ We disscussed in lecture around how to approach the project and decided to creat
 2. Initial Structure:
 - We decided to start with a generic structure for the WebApp. This means creating a foundational structure that is not specific to any particular feature but provides a framework for everyone to begin working simultaneously.
 - The decision to have a generic structure stems from the desire to allow all team members to start working without being hindered by dependencies on specific components or features. This approach aims to prevent individuals from having to wait for certain elements to be added before they can begin implementing their parts of the project.
+
+# Week 2:
+???
