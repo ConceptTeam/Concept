@@ -209,6 +209,14 @@ Window {
                 border.color: "grey"
                 border.width: 1
 
+                onWidthChanged: {
+                    textEditor.resizeEditor(width, height)
+                }
+
+                onHeightChanged: {
+                    textEditor.resizeEditor(width, height)
+                }
+
                 Item{
                     id : editview
                     width : editButton.width * 0.07

@@ -29,14 +29,13 @@ int main(int argc, char *argv[]) {
     TextEditor textEditorWindow;
     engine.rootContext()->setContextProperty("textEditor", &textEditorWindow);
 
-    engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
-    engine.addImportPath(":/");
-    engine.load(url);
-
     //Help Button
     MainHelp helpItem;
     engine.rootContext()->setContextProperty("helpItem", &helpItem);
 
+    engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
+    engine.addImportPath(":/");
+    engine.load(url);
 
     if (engine.rootObjects().isEmpty()) return -1;
 

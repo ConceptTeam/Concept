@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
+#include <iostream>
 
 TextEditor::TextEditor(QWidget *parent)
     : QWidget(parent), textEdit(new QTextEdit(this)), menuBar(new QMenuBar(this)) {
@@ -14,9 +15,11 @@ TextEditor::TextEditor(QWidget *parent)
 
 TextEditor::~TextEditor() {
     //DESTROY TO IMPLEMENT IF NECESSARY
+
 }
 
 void TextEditor::createMenu() {
+    //QMenu *fileMenu = new QMenu("File");
     QMenu *fileMenu = menuBar->addMenu("File");
 
     QAction *newAction = fileMenu->addAction("New");
@@ -30,7 +33,9 @@ void TextEditor::createMenu() {
 
     QAction *saveAsAction = fileMenu->addAction("Save As");
     connect(saveAsAction, &QAction::triggered, this, &TextEditor::saveFileAs);
-    }
+
+    //menuBar->addAction(fileMenu->menuAction());
+}
 
 void TextEditor::newFile() {
     textEdit->clear();
@@ -72,8 +77,16 @@ void TextEditor::saveFileAs() {
 }
 
 void TextEditor::showEditor() {
-    listofTE.push_back(new TextEditor());
-    listofTE[numberofTE]->show();
+    TextEditor* NewTextEditor = new TextEditor();
+    //NewTextEditor->setFixedSize(QSize(750, 400));
+    listofTE.push_back(NewTextEditor);
+    NewTextEditor->show();
     numberofTE++;
+}
+
+void TextEditor::resizeEditor(int width, int height){
+    if(listofTE.empty())    return;
+    //std::cout << width << ' ' << height << '\n';
+    listofTE.back()->resize(width, height);
 }
 

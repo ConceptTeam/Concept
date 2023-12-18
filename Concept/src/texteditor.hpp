@@ -17,6 +17,7 @@ public:
 
 public slots:
     void showEditor();
+    void resizeEditor(int width, int height);
 
 
 private slots:
@@ -30,7 +31,6 @@ private:
     QTextEdit *textEdit;
     QString currentFilePath;
     QMenuBar *menuBar;
-    QWindow *window;
     std::vector<TextEditor*> listofTE;
     int numberofTE{0};
     void createMenu();
