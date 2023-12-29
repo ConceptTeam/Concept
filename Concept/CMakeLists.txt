@@ -24,6 +24,9 @@ qt_add_executable(ConceptApp
     src/textview.h src/textview.cpp
     src/textedit.h src/textedit.cpp
 
+    src/timernew.h src/timernew.cpp
+
+
 )
 
 qt_add_resources(ConceptApp "configuration"
