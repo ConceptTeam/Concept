@@ -11,24 +11,21 @@
 #include <string> // This one might be useless
 
 TextEditor::TextEditor(QWidget *parent)
-    : QMainWindow(parent)
-{
-    textEdit = new QTextEdit(this);
-    setCentralWidget(textEdit);
+    : QWidget(parent), textEdit(new QTextEdit(this)), menuBar(new QMenuBar(this)) {
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setMenuBar(menuBar);
+    layout->addWidget(textEdit);
 
     createMenu();
 }
 
-TextEditor::~TextEditor()
-{
-    // DESTROY TO IMPLEMENT IF NECESSARY
+TextEditor::~TextEditor() {
+    //DESTROY TO IMPLEMENT IF NECESSARY
 }
+
 
 void TextEditor::createMenu()
 {
-    QMenuBar *menuBar = new QMenuBar(this);
-    setMenuBar(menuBar);
-
     QMenu *fileMenu = menuBar->addMenu("File");
 
     QAction *newAction = fileMenu->addAction("New");
