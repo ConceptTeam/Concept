@@ -128,6 +128,13 @@ void TextEditor::saveFileAs()
     }
 }
 
+void TextEditor::showEditor()
+{
+    listofTE.push_back(new TextEditor());
+    listofTE[numberofTE]->show();
+    numberofTE++;
+}
+
 // Old functions for reference
 
 // void TextEditor::openFile()
@@ -154,12 +161,4 @@ void TextEditor::saveFileAs()
 //         currentFilePath = filePath;
 //         saveFile();
 //     }
-// }
-
-// 0 clue where the following comes from - probably a ChatGPT thing I lost track of
-
-// void TextEditor::showEditor() {
-//     listofTE.push_back(new TextEditor());
-//     listofTE[numberofTE]->show();
-//     numberofTE++;
 // }
