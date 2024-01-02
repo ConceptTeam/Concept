@@ -6,7 +6,27 @@
 
 
 int Timer::storeTimer() {
+
     std::cout << "storing timer" << std::endl;
+
+    std::time_t end_time = get_time();
+
+    // id = ???
+    // total_time = ?? add functionality to calculate this
+    // start_time declared when initializing object
+    // end_time declared here
+
+
+    // IMPLEMENT STORING TIMER INTO DATABASE with these members HERE
+
+    return 0;
+}
+
+int Timer::stopTimer() {
+
+    counting = 0;
+    storeTimer();
+
     return 0;
 
 }
@@ -14,100 +34,88 @@ int Timer::storeTimer() {
 int Timer::display() {
 
     std::cout << minute << " mins, " << second << " secs. " << std::endl;
+
+    // IMPLEMENT CHANGING THE TIME DISPLAYED IN THE APP HERE
+    
     return 0;
 }
 
 int Timer::activeCounting() {
-    std::cout << "counting" << std::endl;
-    if (this->finished) {
-        this->stopTimer();
+
+    // std::cout << "counting" << std::endl;
+
+    if (finished) {
+        stopTimer();
     }
     else {
         std::this_thread::sleep_for(std::chrono::seconds(1));
-        this->display();
-        this->update_time();
+        display();
+        update_time();
     }
 
     return 0;
 
 }
-int startZeroTimer() {
-    std::cout << "started zero timer" << std::endl;
-    CountUpTimer current_timer = CountUpTimer();
-    CountUpTimer* timer_pointer = &current_timer;
-    current_timer.counting = true;
-
-    while (current_timer.counting) {
-        (*timer_pointer).activeCounting();
-    }
-
-    return 0;
-
-}
-
-int startFocusTimer(int focus_period) {
-
-    std::cout << "started focus timer" << std::endl;
-    CountDownTimer current_timer = CountDownTimer(focus_period);
-
-    std::cout << current_timer.counting << std::endl;
-    std::cout << current_timer.finished << std::endl;
-    CountDownTimer* timer = &current_timer;
-    current_timer.counting = true;
-    current_timer.finished = false;
-
-
-    while (current_timer.counting && current_timer.finished==false) {
-        current_timer.activeCounting();
-    };
-
-    if (current_timer.finished) {
-        (*timer).storeTimer();
-    }
-
-    return 0;
-}
-
-
 
 int Timer::userPause() {
+    
     std::cout << "paused" << std::endl;
-    this->counting = false;
-    this->display();
+    
+    counting = 0;
+    display();
 
     return 0;
 }
 
 int Timer::userContinue() {
-    std::cout << "continue" << std::endl;
-    this->counting = true;
-    while (this->counting) {
-        this->activeCounting();
+
+    std::cout << "continued" << std::endl;
+
+    counting = 1;
+
+    while (counting) {
+        activeCounting();
     }
 
     return 0;
 
 }
 
-int Timer::stopTimer() {
-    this->finished = true;
-    this->storeTimer();
+int startTimer(Timer *timer_pointer) {
+
+    (*timer_pointer).counting = 1;
+    while ((*timer_pointer).counting) {
+        (*timer_pointer).activeCounting();
+    }
 
     return 0;
+}
 
+int testZeroTimer(Timer *timer_pointer) {
+
+    (*timer_pointer).counting = 1;
+    while ((*timer_pointer).counting) {
+        (*timer_pointer).activeCounting();
+        if ((*timer_pointer).second == 8) {
+            (*timer_pointer).userPause();
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+            (*timer_pointer).userContinue();
+        }
+        else if ((*timer_pointer).second == 10) {
+            (*timer_pointer).stopTimer();
+    }
+    }
+
+    return 0; }
+
+CountUpTimer* initializeZeroTimer() {
+    return new CountUpTimer();
+}
+
+CountDownTimer* initializeFocusTimer(int &focus_period) {
+    return new CountDownTimer(focus_period);
 }
 
 
-
-// struct FocusTime
-// {
-//     int id;
-//     std::time_t creation_time;
-//     std::time_t time_spent;
-
-//     FocusTime() = default;
-// };
-
-// class FocusTimer
 
 
