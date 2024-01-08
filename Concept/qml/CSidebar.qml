@@ -86,6 +86,11 @@ Rectangle {
                 icon.source: "icons/light_bulb.svg"
                 checkable: true
                 checked: true
+
+                ToolTip {
+                    text: qsTr("This is the help text.")
+                    visible: infoTab.hovered
+                }
             }
 
             // Shows the file system when clicked.
@@ -94,6 +99,23 @@ Rectangle {
 
                 icon.source: "icons/read.svg"
                 checkable: true
+
+                ToolTip {
+                    text: qsTr("Explorer")
+                    visible: filesystemTab.hovered
+                }
+            }
+
+            SidebarEntry {
+                id: timerTab
+
+                icon.source: "icons/light_bulb.svg"
+                checkable: true
+
+                ToolTip {
+                    text: qsTr("Timer")
+                    visible: timerTab.hovered
+                }
             }
         }
 
@@ -109,7 +131,7 @@ Rectangle {
         }
 
         TabBar {
-            id: bottomBar
+            id: midBar
 
             spacing: root.tabBarSpacing
             // Opens the Qt website in the system's web browser.

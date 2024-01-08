@@ -12,6 +12,14 @@ Rectangle {
     id: root
 
     signal noteClicked(var index)
+    signal reset()
+
+    onReset: {
+        for (let i = 0; i < explorerTreeView.model.rowCount(); i++)
+            explorerTreeView.toggleExpanded(i)
+    }
+
+    required property var editor
 
     TreeView {
         id: explorerTreeView
@@ -38,13 +46,11 @@ Rectangle {
             implicitHeight: 25
 
             required property int index
-            property var modelType: !treeDelegate.hasChildren ? "file" : "directory"
-            property var dataId: treeDelegate.treeView.model.data(
-                treeDelegate.treeView.index(treeDelegate.row, 1), Qt.DisplayRole
-            )
-            property var dataName: treeDelegate.treeView.model.data(
-                treeDelegate.treeView.index(treeDelegate.row, 0), Qt.DisplayRole
-            )
+            property var modelType: !treeDelegate.hasChildren ? 1 : 2
+            property var dataId: treeDelegate.treeView.model.data(treeDelegate.treeView.index(treeDelegate.row, 0), Qt.DisplayRole)
+            // property var dataName: treeDelegate.treeView.model.data(
+            //     treeDelegate.treeView.index(treeDelegate.row, 0), Qt.DisplayRole
+            // )
 
             indicator: Image {
                 id: directoryIcon
@@ -66,7 +72,7 @@ Rectangle {
             // Change contentItem's color based on whether the item is selected or not.
             contentItem: Text {
                 clip: false
-                text: treeDelegate.dataName
+                text: treeDelegate.treeView.model.getTitle(treeDelegate.dataId, treeDelegate.modelType)
                 elide: Text.ElideRight
                 color: Colors.text
             }
@@ -103,15 +109,14 @@ Rectangle {
                             explorerTreeView.toggleExpanded(treeDelegate.row)
                             // If this model item doesn't have children, it means it's
                             // representing a file.
-                            let idData = treeDelegate.treeView.model.data(
-                                treeDelegate.treeView.index(treeDelegate.row, 1), Qt.DisplayRole
-                            )
-                            if (!treeDelegate.hasChildren && treeDelegate.modelType === "file")
-                                root.noteClicked(idData)
+                            if (!treeDelegate.hasChildren && treeDelegate.modelType === 1)
+                                editor.controller.openNote(treeDelegate.dataId)
                         break;
                         case Qt.RightButton:
                             if (treeDelegate.hasChildren)
-                                contextMenu.popup();
+                                folderContextMenu.popup();
+                            else
+                                noteContextMenu.popup();
                         break;
                     }
                 }

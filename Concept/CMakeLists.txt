@@ -29,6 +29,7 @@ qt_add_executable(ConceptApp
         includes/database/notes.h src/database/notes.cpp
         includes/database/folders.h src/database/folders.cpp
         includes/database/focus_time.h src/database/focus_time.cpp
+        includes/timer.h src/timer.cpp
         includes/database/database.h
         includes/errors.h
 )

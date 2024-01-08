@@ -136,11 +136,14 @@ ApplicationWindow {
                     // Shows the files on the file system.
                     FileSystemView {
                         id: fileSystemView
+                        editor: editor
                         color: Colors.surface1
                         onNoteClicked: index => {
                             editor.controller.openNote(index)
                         }
                     }
+
+                    CTimer {}
                 }
             }
 
@@ -149,6 +152,7 @@ ApplicationWindow {
                 id: editor
                 showLineNumbers: root.showLineNumbers
                 currentNoteId: 0  // TODO: Change later
+                explorer: fileSystemView
                 SplitView.fillWidth: true
                 SplitView.fillHeight: true
             }
