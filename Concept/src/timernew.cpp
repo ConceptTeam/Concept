@@ -4,27 +4,35 @@
 #include <thread>
 #include <ctime>
 
+using namespace std;
 
 int Timer::storeTimer() {
 
-    std::cout << "storing timer" << std::endl;
+    // not relevant for UI
 
-    std::time_t end_time = get_time();
+    time_t end_time = get_time();
 
+    // attributes to store in database:
     // id = ???
-    // total_time = ?? add functionality to calculate this
-    // start_time declared when initializing object
+    // start_timeis attribute of object
+    // total_time attribute of object
     // end_time declared here
 
-
-    // IMPLEMENT STORING TIMER INTO DATABASE with these members HERE
+    // IMPLEMENT STORING TIMER INTO DATABASE with the 4 attributes above
+    // Klaara will do this
 
     return 0;
 }
 
 int Timer::stopTimer() {
 
+    // for octave 
+    // connect to user clicking the stop button
+    // the function automatically stops the timer and stores the timer into the database
+
     counting = 0;
+    time_t time = get_time();
+    total_time += difftime(time, last_start_time);
     storeTimer();
 
     return 0;
@@ -33,16 +41,17 @@ int Timer::stopTimer() {
 
 int Timer::display() {
 
-    std::cout << minute << " mins, " << second << " secs. " << std::endl;
-
-    // IMPLEMENT CHANGING THE TIME DISPLAYED IN THE APP HERE
+    cout << "Time: " << minute << ":" << second << endl;
+    // for octave
+    // when called, the displayed time will be updated to the attributes second and minute of the timer object
+    // should work for minutes with more than 2 digits
     
     return 0;
 }
 
 int Timer::activeCounting() {
 
-    // std::cout << "counting" << std::endl;
+    // not relevant for UI
 
     if (finished) {
         stopTimer();
@@ -58,10 +67,12 @@ int Timer::activeCounting() {
 }
 
 int Timer::userPause() {
-    
-    std::cout << "paused" << std::endl;
+
+    // Octave: connect to user clicking the pause button
     
     counting = 0;
+    std::time_t time = get_time();
+    total_time += difftime(time, last_start_time);
     display();
 
     return 0;
@@ -69,9 +80,10 @@ int Timer::userPause() {
 
 int Timer::userContinue() {
 
-    std::cout << "continued" << std::endl;
+    // Octave: Connect to user clicking the continue button
 
     counting = 1;
+    last_start_time = get_time();
 
     while (counting) {
         activeCounting();
@@ -83,6 +95,10 @@ int Timer::userContinue() {
 
 int startTimer(Timer *timer_pointer) {
 
+    // not relevant for UI
+
+    (*timer_pointer).last_start_time = (*timer_pointer).get_time();
+
     (*timer_pointer).counting = 1;
     while ((*timer_pointer).counting) {
         (*timer_pointer).activeCounting();
@@ -91,31 +107,48 @@ int startTimer(Timer *timer_pointer) {
     return 0;
 }
 
-int testZeroTimer(Timer *timer_pointer) {
-
-    (*timer_pointer).counting = 1;
-    while ((*timer_pointer).counting) {
-        (*timer_pointer).activeCounting();
-        if ((*timer_pointer).second == 8) {
-            (*timer_pointer).userPause();
-            std::this_thread::sleep_for(std::chrono::seconds(3));
-            (*timer_pointer).userContinue();
-        }
-        else if ((*timer_pointer).second == 10) {
-            (*timer_pointer).stopTimer();
-    }
-    }
-
-    return 0; }
 
 CountUpTimer* initializeZeroTimer() {
+    // not relevant for UI
     return new CountUpTimer();
 }
 
 CountDownTimer* initializeFocusTimer(int &focus_period) {
+    // not relevant for UI
     return new CountDownTimer(focus_period);
 }
 
+int userStartsZeroTimer() {
 
+     //octave: connect to user clicking the start button when there is no focus period set
+
+    CountUpTimer* timer = initializeZeroTimer();
+    startTimer(timer);
+
+    return 0;
+}
+
+int userStartsFocusTimer(int &focus_period) {
+
+    // octave: connect to user clicking the start button when there is a focus period set
+    // the focus period chosen by the user is passed as an argument to this function
+    // i dont know how that works
+
+    CountDownTimer* timer = initializeFocusTimer(focus_period);
+    startTimer(timer);
+
+    return 0;
+}
+
+int testFocusTimer() {
+
+    // not relevant for UI
+
+    int focus_period = 25;
+    CountDownTimer* timer = initializeFocusTimer(focus_period);
+    startTimer(timer);
+
+    return 0;
+}
 
 
