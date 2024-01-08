@@ -12,7 +12,6 @@ Rectangle {
     id: root
 
     signal noteClicked(var index)
-    property alias rootIndex: explorerTreeView.rootIndex
 
     TreeView {
         id: explorerTreeView
@@ -39,16 +38,13 @@ Rectangle {
             implicitHeight: 25
 
             required property int index
-            required property var modelData
             property var modelType: !treeDelegate.hasChildren ? "file" : "directory"
             property var dataId: treeDelegate.treeView.model.data(
-                treeDelegate.treeView.index(modelData.row, 1), Qt.DisplayRole
+                treeDelegate.treeView.index(treeDelegate.row, 1), Qt.DisplayRole
             )
             property var dataName: treeDelegate.treeView.model.data(
-                treeDelegate.treeView.index(modelData.row, 0), Qt.DisplayRole
+                treeDelegate.treeView.index(treeDelegate.row, 0), Qt.DisplayRole
             )
-
-            visible: modelData.column === 0
 
             indicator: Image {
                 id: directoryIcon
@@ -108,7 +104,7 @@ Rectangle {
                             // If this model item doesn't have children, it means it's
                             // representing a file.
                             let idData = treeDelegate.treeView.model.data(
-                                treeDelegate.treeView.index(modelData.row, 1), Qt.DisplayRole
+                                treeDelegate.treeView.index(treeDelegate.row, 1), Qt.DisplayRole
                             )
                             if (!treeDelegate.hasChildren && treeDelegate.modelType === "file")
                                 root.noteClicked(idData)
