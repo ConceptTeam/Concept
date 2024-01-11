@@ -113,9 +113,9 @@ CountUpTimer* initializeZeroTimer() {
     return new CountUpTimer();
 }
 
-CountDownTimer* initializeFocusTimer(int &focus_period) {
+CountDownTimer* initializeFocusTimer(int &focus_minutes, int &focus_hours) {
     // not relevant for UI
-    return new CountDownTimer(focus_period);
+    return new CountDownTimer(focus_minutes, focus_hours);
 }
 
 int userStartsZeroTimer() {
@@ -128,13 +128,13 @@ int userStartsZeroTimer() {
     return 0;
 }
 
-int userStartsFocusTimer(int &focus_period) {
+int userStartsFocusTimer(int &focus_minutes, int &focus_hours) {
 
-    // octave: connect to user clicking the start button when there is a focus period set
+    // octave: connect to user clicking the start button when there is a focus period set (hours and minutes)
     // the focus period chosen by the user is passed as an argument to this function
     // i dont know how that works
 
-    CountDownTimer* timer = initializeFocusTimer(focus_period);
+    CountDownTimer* timer = initializeFocusTimer(focus_minutes, focus_hours);
     startTimer(timer);
 
     return 0;
@@ -145,7 +145,7 @@ int testFocusTimer() {
     // not relevant for UI
 
     int focus_period = 25;
-    CountDownTimer* timer = initializeFocusTimer(focus_period);
+    CountDownTimer* timer = initializeFocusTimer(focus_period, focus_period);
     startTimer(timer);
 
     return 0;
