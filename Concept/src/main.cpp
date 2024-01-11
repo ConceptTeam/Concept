@@ -1,4 +1,5 @@
 // main.cpp
+//#include <QTimer>
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -65,6 +66,10 @@ int main(int argc, char *argv[]) {
     QObject::connect(&helpItem, &MainHelp::showRedSquare, &redSquareManager, &RedSquareManager::showRedSquare);
 
     if (engine.rootObjects().isEmpty()) return -1;
+
+    //QWidget y = QWidget();
+    //QTimer x = QTimer();
+    //y.setCh
 
     return app.exec();
 }
