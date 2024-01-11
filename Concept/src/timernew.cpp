@@ -13,7 +13,6 @@ int Timer::storeTimer() {
     time_t end_time = get_time();
 
     // attributes to store in database:
-    // id = ???
     // start_timeis attribute of object
     // total_time attribute of object
     // end_time declared here
