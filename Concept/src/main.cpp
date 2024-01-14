@@ -9,6 +9,7 @@
 #include "mainhelp.h"
 #include "textedit.h"
 #include "textview.h"
+#include "newlist.h"
 
 int main(int argc, char *argv[]) {
     set_qt_environment();
@@ -18,6 +19,9 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
 
     qmlRegisterType<MainHelp>("CustomControls", 1, 0, "MainHelp");
+
+    NewListAbstractModel model(&app);
+    engine.rootContext()->setContextProperty("fileListModel", QVariant::fromValue(&model));
 
     const QUrl url(u"qrc:/Main/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,

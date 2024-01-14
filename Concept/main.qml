@@ -131,57 +131,79 @@ Window {
                 }
             }
 
-            // First basic list for column1
             Rectangle {
-                id: column1list1
+                id: list
+                anchors.top: column1Header.bottom
                 width: parent.width
-                height: parent.height * 0.05
+                height: parent.height * 0.50
                 color: "#ffff99" // Modify later
                 border.color: "grey"
                 border.width: 1
+            
+            ListView {
+                id: listView
 
-                // Anchor the top of column1list1 to the bottom of column1Header
-                anchors.top: column1Header.bottom
-                property bool listNameInputClicked: false
+                anchors {
+                fill: parent
+                margins: 2
+                }
 
-                // Text input for list name
-                TextInput {
-                    id: listNameInput
-                    anchors.fill: parent
-                    text: "List Name" // Initial text
-                    font.pixelSize: nameBar.height * 0.3
-                    font.family: "Helvetica"
-                    selectByMouse: true // Allow text selection by mouse
-                    color: column1list1.listNameInputClicked ? "blue" : "black"
-                    verticalAlignment: Text.AlignVCenter
-                    readOnly: !column1list1.listNameInputClicked // Set to true to make it read-only
-                    leftPadding: 20
+                model: fileListModel
 
-                    // Handle mouse clicks
-                    MouseArea {
+                delegate: Rectangle{
+                    height: 50
+                    width: parent.width
+
+                     // Anchor the top of list to the bottom of column1Header
+                        anchors.top: column1Header.bottom
+
+                    TextInput {
+                        property bool listNameInputClicked: false
+
+                        id: listNameInput
+                        anchors.fill: parent
+                        //text: "List Name" // Initial text
+                        text: name
+                        font.pixelSize: nameBar.height * 0.3
+                        font.family: "Helvetica"
+                        selectByMouse: true // Allow text selection by mouse
+                        color: listNameInput.listNameInputClicked ? "blue" : "black"
+                        verticalAlignment: Text.AlignVCenter
+                        readOnly: !listNameInput.listNameInputClicked // Set to true to make it read-only
+                        leftPadding: 20
+
+                        // Handle mouse clicks
+                        MouseArea {
                         anchors.fill: parent
                         onClicked: {
                             // Handle click event here
                             console.log("List name clicked!")
-                            column1list1.listNameInputClicked = true
+                            listNameInput.listNameInputClicked = true
+                            }
                         }
-                    }
 
-                    // Handle editing finished event
-                    onEditingFinished: {
-                        // Handle editing finished event here
-                        console.log("Editing finished:", listNameInput.text.trimmed())
-                        column1list1.listNameInputClicked = false
-                    }
+                        // Handle editing finished event
+                        onEditingFinished: {
+                         // Handle editing finished event here
+                            console.log("Editing finished:", listNameInput.text.trimmed())
+                            listNameInput.listNameInputClicked = false
+                            }
+                        }
+    
                 }
+
+                spacing: 4
+                cacheBuffer: 50
             }
+            }
+
             Rectangle {
                 id: newListButtonColumn
                 width: parent.width
                 height: parent.height * 0.05
                 color: "#ffcccc" // Modify later
                 border.width: 1
-                anchors.top: column1list1.bottom
+                anchors.top: list.bottom
             // "New list" button
                 Button {
                     id: newListButton
@@ -189,6 +211,15 @@ Window {
                     font.pixelSize: nameBar.height * 0.2
                     anchors.horizontalCenter: newListButtonColumn.horizontalCenter
                     anchors.verticalCenter: newListButtonColumn.verticalCenter
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                                // Handle click event here
+                                fileListModel.add("");
+                            }
+                        }
+            
                 }
             }
         }

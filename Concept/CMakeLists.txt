@@ -27,6 +27,8 @@ qt_add_executable(ConceptApp
     src/mainhelp.h src/mainhelp.cpp
     src/textview.h src/textview.cpp
     src/textedit.h src/textedit.cpp
+    src/fileitem.h src/fileitem.cpp
+    src/newlist.h src/newlist.cpp
 
 )
 
