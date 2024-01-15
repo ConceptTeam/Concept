@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/klaarahuima/Desktop/Concept/Concept",
-      "program": "/Users/klaarahuima/Desktop/Concept/Concept/build/Debug/outDebug"
+      "cwd": "/Users/klaarahuima/Desktop/RUNFILE/Concept/src",
+      "program": "/Users/klaarahuima/Desktop/RUNFILE/Concept/src/build/Debug/outDebug"
     }
   ]
 }
