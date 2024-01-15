@@ -9,7 +9,6 @@ using namespace std;
 class Timer
 {
 public:
-
     int second;
     int minute;
     int hour;
@@ -36,6 +35,7 @@ public:
     int total_time = 0;
 
     int storeTimer();
+    void startCounting();
     int display();
     int activeCounting();
     virtual bool update_time() {
@@ -51,8 +51,6 @@ public:
     int userPause();
     int userContinue();
     int stopTimer();
-
-
 };
 
 class CountUpTimer : public Timer {
@@ -80,6 +78,12 @@ public:
         return finished;
     }
 };
+
+CountUpTimer* initializeZeroTimer();
+CountDownTimer* initializeFocusTimer(int &focus_minutes, int &focus_hours);
+Timer* userStartsZeroTimer();
+Timer* userStartsFocusTimer(int &focus_minutes, int &focus_hours);
+
 
 #endif // STUDYTIMER_H
 

@@ -71,16 +71,13 @@ int Timer::userContinue() {
 
 }
 
-int startTimer(Timer *timer_pointer) {
+void Timer::startCounting() {
 
-    (*timer_pointer).last_start_time = (*timer_pointer).get_time();
-
-    (*timer_pointer).counting = 1;
-    while ((*timer_pointer).counting) {
-        (*timer_pointer).activeCounting();
+    last_start_time = get_time();
+    counting = 1;
+    while (counting) {
+        activeCounting();
     }
-
-    return 0;
 }
 
 
@@ -92,18 +89,18 @@ CountDownTimer* initializeFocusTimer(int &focus_minutes, int &focus_hours) {
     return new CountDownTimer(focus_minutes, focus_hours);
 }
 
-Timer userStartsZeroTimer() {
+Timer* userStartsZeroTimer() {
 
     CountUpTimer* timer = initializeZeroTimer();
-    startTimer(timer);
+    timer->startCounting();
 
     return timer;
 }
 
-Timer userStartsFocusTimer(int &focus_minutes, int &focus_hours) {
+Timer* userStartsFocusTimer(int &focus_minutes, int &focus_hours) {
 
     CountDownTimer* timer = initializeFocusTimer(focus_minutes, focus_hours);
-    startTimer(timer);
+    timer->startCounting();
 
     return timer;
 }

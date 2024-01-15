@@ -7,7 +7,9 @@ import CustomControls 1.0
 Rectangle {
     
     id: root
-    
+
+
+
     Rectangle {
         id: studyTimerBlock
         width: root.width
@@ -29,13 +31,18 @@ Rectangle {
         }
     }
 
+    SetFocusPeriod {
+        id:focusItem
+    }
+
     Rectangle {
         id: timerBlock
         width: root.width
         height: root.height * 0.15
         anchors.top: studyTimerBlock.bottom
         color: "#c4c8cc"
-        
+
+
         Row {
             //spacing: 0
             Button {
@@ -43,12 +50,13 @@ Rectangle {
                 text: "Break"
                 font.pixelSize: timerBlock.height * 0.15
                 width: timerBlock.width / 2
+                onClicked: focusItem.handlePause()
                 background: Rectangle{
                 color: "#738290"
-                id: studyButton
-                text: "Break"
-                font.pixelSize: timerBlock.height * 0.07
-                onClicked: SetFocusPeriod.handlePause()
+                //id: studyButton
+                //text: "Break"
+                //font.pixelSize: timerBlock.height * 0.07
+
                 }
             }
             Rectangle{
@@ -64,21 +72,20 @@ Rectangle {
                 font.pixelSize: timerBlock.height * 0.15
                 anchors.top: studyButton.top
                 width: timerBlock.width / 2 - spacerButtonsTimerBlock.width
+                onClicked: focusItem.handleContinue()
                 background: Rectangle{
                 color: "#738290"
-                id: studyButton
-                text: "Break"
-                font.pixelSize: timerBlock.height * 0.07
-                onClicked: SetFocusPeriod.handleContinue()
+                //id: studyButton
+                //text: "Break"
+                //font.pixelSize: timerBlock.height * 0.07
+
                 }
             }
 
         }
         
         //Timer Display
-        SetFocusPeriod {
-            id:focusItem
-        }
+
         Text {
             id: timerDisplay
             text: focusItem.time
@@ -105,10 +112,6 @@ Rectangle {
             //timerDisplay.text = Qt.formatDateTime(new Date(0, 0, 0, 0, minutes, seconds), "mm:ss")
         //}
 
-    }
-    
-    SetFocusPeriod {
-        id: focusItem
     }
     
     Rectangle {
@@ -144,6 +147,7 @@ Rectangle {
             text: "Start"
             font.pixelSize: timerBlock.height * 0.15
             anchors.centerIn: parent
+            onClicked: focusItem.handleStart()
         }
     }
     Rectangle {
@@ -158,6 +162,7 @@ Rectangle {
             text: "Stop"
             font.pixelSize: timerBlock.height * 0.15
             anchors.centerIn: parent
+            onClicked: focusItem.handleStop()
         }
     }
     Rectangle {

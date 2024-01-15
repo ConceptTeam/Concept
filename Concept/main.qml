@@ -2,8 +2,8 @@ import QtQuick
 // import QtQuick.Controls
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
-import Concept
 import QtQuick.Shapes
+import Concept
 
 pragma ComponentBehavior: Bound
 
@@ -194,7 +194,7 @@ ApplicationWindow {
                     SplitView.fillWidth: true
                     SplitView.fillHeight: true
                     color: Colors.surface1
-                }
+            }
 
             }
         }

@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QMenu>
-#include "studytimer.cpp"
+#include <QTimer>
+#include "studytimer.h"
 
 class SetFocusPeriod : public QQuickItem {
     Q_OBJECT
@@ -21,6 +22,10 @@ signals:
 
 public slots:
     void showMenu();
+    void handleStop();
+    void handleContinue();
+    void handleStart();
+    void handlePause();
 
 private:
     QMenu menu;
@@ -33,10 +38,7 @@ private slots:
     void handleThirtyMinutes();
     void handleFourtyFiveMinutes();
     void handleOneHour();
-    void handlePause();
-    void handleStop();
-    void handleContinue();
-    void handleStart();
+    void handleTimeout();
 };
 
 #endif // SETFOCUSPERIOD_H
