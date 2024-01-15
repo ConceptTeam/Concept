@@ -160,7 +160,7 @@ Rectangle {
         color: "#c4c8cc"
         Button{
             id: stop
-            text: "Stop"
+            text: "End timer"
             font.pixelSize: timerBlock.height * 0.15
             anchors.centerIn: parent
             onClicked: {
