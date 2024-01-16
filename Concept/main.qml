@@ -4,6 +4,7 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Concept
 import QtQuick.Shapes
+import CustomControls 1.0 
 
 pragma ComponentBehavior: Bound
 
@@ -19,7 +20,13 @@ ApplicationWindow {
     height: Screen.height * 0.95
     title: "Concept"
     visible: true
-    color: Colors.background
+
+    Theme {
+        id: themeItem
+    }
+
+    color: themeItem.background()
+
     flags: Qt.Window | Qt.FramelessWindowHint
 
     function generateInfoText() {
@@ -33,7 +40,6 @@ ApplicationWindow {
     menuBar: CMenuBar {
         dragWindow: root
         infoText: generateInfoText()
-
 
         CMenu {
             id: noteContextMenu
@@ -82,7 +88,13 @@ ApplicationWindow {
             Action {
                 text: Colors.isDarkMode ? qsTr("Toggle Light Mode")
                     : qsTr("Toggle Dark Mode")
-                onTriggered: Colors.isDarkMode = !Colors.isDarkMode
+                onTriggered: 
+                {
+                    Colors.isDarkMode = !Colors.isDarkMode
+                    themeItem.changeMode()
+                    console.log("Dark mode: " + themeItem.isDarkMode())
+                    console.log(themeItem.background())
+                }
             }
         }
 

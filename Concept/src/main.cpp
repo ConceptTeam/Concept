@@ -15,8 +15,11 @@
 #include "includes/setFocusPeriod.h"
 #include <iostream>
 #include "includes/calendar.h"
+#include "includes/cppColors.h"
 
 int main(int argc, char *argv[]) {
+
+    std::cout << "Hello World!" << std::endl;
     // Initialize QxOrm
     qx::QxSqlDatabase::getSingleton()->setDriverName("QSQLITE");
     qx::QxSqlDatabase::getSingleton()->setDatabaseName("./database.sqlite");
@@ -33,7 +36,6 @@ int main(int argc, char *argv[]) {
     Note_ptr note; note.reset(new Note());
 
     // Check if at least 1 note exists, if not, create a test note
-
     if (qx::dao::count<Note>() == 0) {
         qDebug() << "No notes found, creating a test note";
         note->id = 1;
@@ -86,16 +88,16 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<MainHelp>("CustomControls", 1, 0, "MainHelp");
     qmlRegisterType<SetFocusPeriod>("CustomControls", 1, 0, "SetFocusPeriod");
     qmlRegisterType<Calendar>("CustomControls", 1, 0, "Calendar");
+    qmlRegisterType<Theme>("CustomControls", 1, 0, "Theme");
 
-
-    //RedSquareManager redSquareManager;
+    Theme themeItem;
+    engine.rootContext()->setContextProperty("themeItem", &themeItem);
 
     const QUrl url(u"qrc:/Main/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
         [url](QObject *obj, const QUrl &objUrl) {
             if (!obj && url == objUrl) QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
-
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
@@ -105,10 +107,6 @@ int main(int argc, char *argv[]) {
     SetFocusPeriod focusItem;
     engine.rootContext()->setContextProperty("focusItem", &focusItem);
 
-/*<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes*/
     //Help Button
     MainHelp helpItem;
     HelpDialog1 helpDialog1;
@@ -129,8 +127,6 @@ int main(int argc, char *argv[]) {
     QObject::connect(&helpItem, &MainHelp::Notebooks, [&helpNotebooks]() {
         helpNotebooks.show();  // You can use show() instead of exec() for modeless dialog
     });
-
-    //engine.rootContext()->setContextProperty("redSquareManager", &redSquareManager);
 
     if(engine.rootObjects().isEmpty()){
         std::cout << "Root Objects is empty" << std::endl;

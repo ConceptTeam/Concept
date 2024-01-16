@@ -72,12 +72,15 @@ Rectangle {
                 explorer.reset();
             }
         }
+        /*
         onFolderRenamed: (id, newName) => {
+            
             root.currentFolderId = id
             root.currentFolderTitle = newName
             explorer.reset()
-            console.log("onFolderRenamed", id, newName)
+            console.log("onFolderRenamed", id, newName)   
         }
+        */
     }
 
     RowLayout {
