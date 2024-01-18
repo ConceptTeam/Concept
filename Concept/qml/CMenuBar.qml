@@ -144,7 +144,10 @@ MenuBar {
                 id: close
 
                 color: hovered ? "#ec4143" : "transparent"
-                onAction: root.dragWindow.close()
+                onAction: {
+                        root.dragWindow.close();
+                        calendarItem.closeCalendarFromQML();  // Call the new slot when close button is clicked
+                    }
                 Rectangle {
                     anchors.centerIn: parent
                     width: parent.height - 8; height: 2

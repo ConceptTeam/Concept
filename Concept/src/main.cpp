@@ -105,10 +105,11 @@ int main(int argc, char *argv[]) {
     SetFocusPeriod focusItem;
     engine.rootContext()->setContextProperty("focusItem", &focusItem);
 
-/*<<<<<<< Updated upstream
-=======
+    //Close Calendar
 
->>>>>>> Stashed changes*/
+
+
+
     //Help Button
     MainHelp helpItem;
     HelpDialog1 helpDialog1;
@@ -120,9 +121,23 @@ int main(int argc, char *argv[]) {
     //Calendar Button
     CalendarQML calendarItem = CalendarQML();
     engine.rootContext()->setContextProperty("calendarItem", &calendarItem);
-    //QObject::connect(&calendarItem, &Calendar::File, [&calendarItem]() {
-       // calendarItem.showCalendar();  // You can use show() instead of exec() for modeless dialog
-    //});
+    QObject::connect(&calendarItem, &CalendarQML::File, [&calendarItem]() {
+        calendarItem.showCalendar();
+    });
+
+    // Connect the signal from CalendarQML to close the Calendar
+    QObject::connect(&calendarItem, &CalendarQML::showCalendar, [&calendarItem]() {
+        calendarItem.closeCalendarFromQML();
+    });
+
+    // Connect the aboutToQuit signal to close the calendar when the application is about to quit
+    QObject::connect(qApp, &QGuiApplication::aboutToQuit, [&calendarItem]() {
+        calendarItem.closeCalendarFromQML();
+    });
+
+    QObject::connect(&calendarItem, &::CalendarQML::showCalendar, [&calendarItem]() {
+        calendarItem.closeCalendarFromQML();
+    });
 
     HelpNotebooks helpNotebooks;
     engine.rootContext()->setContextProperty("helpItem", &helpItem);
@@ -137,11 +152,11 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     QObject *rootObject = engine.rootObjects().first();
-//    QTreeView treeView;
-//
-//    ExplorerModel model;
-//    treeView.setModel(&model);
-//    treeView.show();
+    //    QTreeView treeView;
+    //
+    //    ExplorerModel model;
+    //    treeView.setModel(&model);
+    //    treeView.show();
 
     if (engine.rootObjects().isEmpty()) return -1;
 

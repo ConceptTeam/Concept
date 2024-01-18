@@ -34,9 +34,7 @@ ApplicationWindow {
         dragWindow: root
         infoText: generateInfoText()
 
-
         CMenu {
-            id: noteContextMenu
             title: qsTr("File")
             Action {
                 text: qsTr("Debug")
@@ -99,23 +97,7 @@ ApplicationWindow {
                 onTriggered: editor.text.font.pixelSize -= 1
             }
         }
-
-        CMenu {
-            title: qsTr("Tools")
-            Action {
-                text: qsTr("Word Count: ") + editor.currentWordCount
-            }
-            Action {
-                text: qsTr("Character Count: ") + editor.currentCharacterCount
-            }
-
-            Action {
-                text: qsTr("Non-space Character Count: ") + editor.currentCharacterCountNoSpaces
-            }
-        }
-
     }
-
 
     RowLayout {
         anchors.fill: parent
@@ -218,4 +200,3 @@ ApplicationWindow {
         }
     }
 }
-
