@@ -15,6 +15,7 @@
 #include "includes/setFocusPeriod.h"
 #include <iostream>
 #include "includes/calendar.h"
+#include "includes/codeRun.h"
 
 int main(int argc, char *argv[]) {
     // Initialize QxOrm
@@ -86,6 +87,7 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<MainHelp>("CustomControls", 1, 0, "MainHelp");
     qmlRegisterType<SetFocusPeriod>("CustomControls", 1, 0, "SetFocusPeriod");
     qmlRegisterType<Calendar>("CustomControls", 1, 0, "Calendar");
+    qmlRegisterType<CodeRun>("CustomControls", 1, 0, "CodeRun");
 
 
     //RedSquareManager redSquareManager;

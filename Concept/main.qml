@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Concept
+import CustomControls
 import QtQuick.Shapes
 
 pragma ComponentBehavior: Bound
@@ -114,6 +115,19 @@ ApplicationWindow {
             }
         }
 
+        CodeRun {
+            id: codeItem
+        }
+
+        CMenu {
+            title: qsTr("Code")
+            Action {
+                text: qsTr("Run text as Python code") 
+                onTriggered: {
+                    codeItem.handleRunAction(editor.text.text);
+                }
+            }
+        }
     }
 
 

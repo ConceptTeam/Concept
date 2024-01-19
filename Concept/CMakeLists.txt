@@ -13,6 +13,7 @@ include_directories(includes)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickControls2 Svg)
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickControls2 Svg)
+find_package(Python3 COMPONENTS Development)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
@@ -29,6 +30,7 @@ qt_add_executable(ConceptApp
     includes/calendar.h src/calendar.cpp
     includes/mainhelp.h src/mainhelp.cpp
     includes/setFocusPeriod.h src/setFocusPeriod.cpp
+    includes/codeRun.h src/codeRun.cpp
     includes/export.h includes/precompiled.h
     includes/database/notes.h src/database/notes.cpp
     includes/database/folders.h src/database/folders.cpp
@@ -63,6 +65,7 @@ target_link_libraries(ConceptApp PRIVATE
     Qt6::Svg
     ${QX_LIBRARIES}
     QxOrm
+    Python3::Python
 )
 
 if (BUILD_QDS_COMPONENTS)
