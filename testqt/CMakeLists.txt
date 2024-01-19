@@ -17,6 +17,7 @@ set(SOURCES
     timer.cpp
     calendar.cpp
     DateCell.cpp
+    CSideBar.cpp
 )
 
 # Set header files
@@ -27,6 +28,7 @@ set(HEADERS
     timer.h
     Calendar.hpp
     DateCell.hpp
+    CSideBar.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

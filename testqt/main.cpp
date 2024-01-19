@@ -3,13 +3,11 @@
 #include <QApplication>
 #include <iostream>
 #include "mainhelp.h"
-#include <QTimer>
-#include "Calendar.hpp"
-
+#include "CSideBar.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Calendar* x = new Calendar();
-    x->show();
+    CSideBar* m = new CSideBar;
+    m->show();
     return a.exec();
 }

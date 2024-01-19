@@ -5,13 +5,13 @@
 #include <QLabel>
 #include "Colors.h"
 
-class MenuItem: QWidget{
+class CSideBarItem: public QWidget{
 Q_OBJECT
 public:
-	SideBarItem(QWidget* parent);
+	CSideBarItem(QWidget* parent=nullptr);
 	void setIconURL(QString);
 	void setColor(Colors);
-	QLabel tooltip;
+	QLabel* tooltip;
 
 private:
 	QString	iconURL; //maybe change if needed
@@ -23,11 +23,11 @@ private:
 class CSideBar: public QWidget{
 Q_OBJECT
 public:	
-	CMenuBar(QWidget *parent);
+	CSideBar(QWidget *parent = nullptr);
 
 private:
 	Colors color;
-	layout *layout;
+	QVBoxLayout *layout;
 };
 
 
