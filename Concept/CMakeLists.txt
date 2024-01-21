@@ -25,17 +25,17 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party ${CMAKE_CURRENT_BINARY_
 ### Don't forget to add your new cpp and hpp functions here to link them with the App
 qt_add_executable(ConceptApp
     src/main.cpp
-    includes/calendar.h src/calendar.cpp
     includes/mainhelp.h src/mainhelp.cpp
-    includes/toolBox.h src/toolBox.cpp
     includes/setFocusPeriod.h src/setFocusPeriod.cpp
     includes/export.h includes/precompiled.h
     includes/database/notes.h src/database/notes.cpp
     includes/database/folders.h src/database/folders.cpp
     includes/database/focus_time.h src/database/focus_time.cpp
-    includes/timer.h src/timer.cpp
+    includes/studytimer.h src/studytimer.cpp
     includes/database/database.h
     includes/errors.h
+
+
 )
 
 ## Configure QxOrm
