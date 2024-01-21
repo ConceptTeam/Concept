@@ -4,6 +4,7 @@
 #define STUDYTIMER_H
 #include <chrono>
 #include <thread>
+#include <QDebug>
 #include <ctime>
 
 using namespace std;
@@ -28,6 +29,7 @@ public:
     time_t get_time() { //for storing system time
         std::chrono::system_clock::time_point currentTime = std::chrono::system_clock::now();
         time_t currentTime_t = std::chrono::system_clock::to_time_t(currentTime);
+        qDebug() << currentTime_t;
         return currentTime_t;
     }
 
@@ -37,7 +39,6 @@ public:
     int total_time = 0;
 
     int storeTimer();
-    int display();
     int activeCounting();
     virtual bool update_time() {
         if (second != 59) {second ++;}
@@ -56,7 +57,7 @@ public:
 
 
 };
-
+/*
 class CountUpTimer : public Timer {
 public:
 
@@ -79,6 +80,7 @@ public:
     }
 
 };
+*/
 
 class CountDownTimer : public Timer {
 public:

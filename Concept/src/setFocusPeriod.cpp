@@ -14,6 +14,7 @@ SetFocusPeriod::SetFocusPeriod(QQuickItem *parent) : QQuickItem(parent) {
 
     //timer->setInterval(1000); // 1 second
 
+    QAction *action15 = new QAction("15 Seconds", this);
     QAction *action25 = new QAction("25 Minutes", this);
     QAction *action30 = new QAction("30 Minutes", this);
     QAction *action45 = new QAction("45 Minutes", this);
@@ -24,6 +25,7 @@ SetFocusPeriod::SetFocusPeriod(QQuickItem *parent) : QQuickItem(parent) {
     QAction *actionContinue = new QAction("Continue", this);
     QAction *actionStart = new QAction("Start", this);
 
+    connect(action15, &QAction::triggered, this, &SetFocusPeriod::handle15Seconds);
     connect(action25, &QAction::triggered, this, &SetFocusPeriod::handleTwentyFiveMinutes);
     connect(action30, &QAction::triggered, this, &SetFocusPeriod::handleThirtyMinutes);
     connect(action45, &QAction::triggered, this, &SetFocusPeriod::handleFourtyFiveMinutes);
@@ -32,6 +34,7 @@ SetFocusPeriod::SetFocusPeriod(QQuickItem *parent) : QQuickItem(parent) {
 
     connect(&q_timer, &QTimer::timeout, this, &SetFocusPeriod::handleTimeout);
 
+    menu.addAction(action15);
     menu.addAction(action25);
     menu.addAction(action30);
     menu.addAction(action45);
@@ -54,11 +57,28 @@ QString SetFocusPeriod::getTime() const   {
 void SetFocusPeriod::handleTimeout() {
     if (counting) {
         counting = timer.update_timer();
-        if (timer.finished) {
+        if (!timer.finished) {
             handleStop();
         }
         emit timeChanged();
-        emit setTime(timer.getTime());  // Emit a signal to notify the change in time
+        if (timer.current_second != 0) {
+            timer.current_second--;
+        } else {
+            if (timer.current_minute != 0) {
+                timer.current_minute--;
+                timer.current_second = 59;
+            } else {
+                if (timer.current_hour != 0) {
+                    timer.current_hour--;
+                    timer.current_minute = 59;
+                    timer.current_second = 59;
+                } else {
+                    // Timer is finished
+                    timer.finished = true;
+                }
+            }
+        }
+
     }
 }
 
@@ -67,59 +87,79 @@ void SetFocusPeriod::showMenu() {
     menu.exec(QCursor::pos());
 }
 
+
+void SetFocusPeriod::handle15Seconds() {
+    timer.current_second = 15;
+    timer.current_minute = 0;
+    timer.current_hour = 0;
+    emit timeChanged();
+    emit setTime(timer.getTime());
+}
+
+
+
 void SetFocusPeriod::handleTwentyFiveMinutes() {
+    timer.current_second = 0;
     timer.current_minute = 25;
+    timer.current_hour = 0;
     emit timeChanged();
     emit setTime(timer.getTime());
 }
 
 void SetFocusPeriod::handleThirtyMinutes() {
     qDebug() << "Selected: 30 Minutes";
+    timer.current_second = 0;
     timer.current_minute = 30;
+    timer.current_hour = 0;
     emit timeChanged();
     emit setTime(timer.getTime());
 }
 
 void SetFocusPeriod::handleFourtyFiveMinutes() {
     qDebug() << "Selected: 45 Minutes";
+    timer.current_second = 0;
     timer.current_minute = 45;
+    timer.current_hour = 0;
     emit timeChanged();
     emit setTime(timer.getTime());
 }
 
 void SetFocusPeriod::handleOneHour() {
     qDebug() << "Selected: 1 Hour";
-    timer.current_hour = 1;
+    timer.current_second = 0;
     timer.current_minute = 0;
+    timer.current_hour = 1;
     emit timeChanged();
     emit setTime(timer.getTime());
 }
 
 void SetFocusPeriod::handleStart() {
-    if (timer.current_minute > 0 || timer.current_hour > 0) {
+    if (timer.current_minute > 0 || timer.current_hour > 0 || timer.current_second >  14) {
         counting = true;
         q_timer.start(1000);
-
-        // Emit a signal to update the timer display immediately
-        emit timeChanged();
         emit setTime(timer.getTime());
     } else {
         qDebug() << "Focus period not set. Please select a focus period.";
     }
 }
+
 void SetFocusPeriod::handlePause() {
-    timer.userPause();
+    counting = false;
+    q_timer.stop();
+
 }
 
 void SetFocusPeriod::handleStop() {
     counting = false;
     q_timer.stop();
-    emit timeChanged();
+
 }
 
 
 void SetFocusPeriod::handleContinue() {
-    timer.userContinue();
+    counting = true;
+    q_timer.start(1000);
+
 }
 
 SetFocusPeriod::~SetFocusPeriod() {

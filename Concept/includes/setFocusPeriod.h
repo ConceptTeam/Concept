@@ -32,6 +32,7 @@ private:
     bool counting;
 
 private slots:
+    void handle15Seconds();
     void handleTwentyFiveMinutes();
     void handleThirtyMinutes();
     void handleFourtyFiveMinutes();

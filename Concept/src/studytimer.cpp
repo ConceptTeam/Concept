@@ -27,12 +27,6 @@ int Timer::stopTimer() {
 
 }
 
-int Timer::display() {
-
-    cout << "Time: " << minute << ":" << second << endl;
-
-    return 0;
-}
 
 int Timer::activeCounting() {
 
@@ -43,7 +37,6 @@ int Timer::activeCounting() {
     else {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         update_time();
-        display();
     }
 
     return 0;
@@ -52,17 +45,16 @@ int Timer::activeCounting() {
 
 int Timer::userPause() {
 
-    counting = 0;
+    counting = false;
     std::time_t time = get_time();
     total_time += difftime(time, last_start_time);
-    display();
 
     return 0;
 }
 
 int Timer::userContinue() {
 
-    counting = 1;
+    counting = true;
     last_start_time = get_time();
 
     while (counting) {
@@ -85,30 +77,4 @@ int startTimer(Timer *timer_pointer) {
     return 0;
 }
 
-/*
-CountUpTimer* initializeZeroTimer() {
-    return new CountUpTimer();
-}
-
-CountDownTimer* initializeFocusTimer(int &focus_minutes, int &focus_hours) {
-    return new CountDownTimer(focus_minutes, focus_hours);
-}
-
-Timer userStartsZeroTimer() {
-
-    CountUpTimer* timer = initializeZeroTimer();
-    startTimer(timer);
-
-    return *timer;
-}
-
-Timer userStartsFocusTimer(int &focus_minutes, int &focus_hours) {
-
-    CountDownTimer* timer = initializeFocusTimer(focus_minutes, focus_hours);
-    startTimer(timer);
-
-    return *timer;
-}
-
-*/
 
