@@ -26,4 +26,7 @@ Maxime Despréaux Weekly Update
 
     Week 5: 
         The UI was redesigned and retouched quite a lot during the vacation introducing a more eye pleasing dark-theme. There' also a side task bar for space management.
-        The database was also changed to qxorm, which created a lot of errors for my computer and could't build. I'm dedicating a lot of my work to getting Qt6 running our               project on Ubuntu.
+        The database was also changed to qxorm, which created a lot of errors for my computer and could't build. I'm dedicating a lot of my work to getting Qt6 running our project on Ubuntu.
+
+    Week 6:
+        I finally managed to get the Virtual Machine working on my computer and compile the project. I will start as soon as possible to work alongside my group. After noticing that the timer was the only 'main' feature missing, I started dedicating myself to the task. It is now quite functionnal: You may select a 'Study Time' and can press 'Start' to make the timer countdown and you can press 'Stop' to stop it. I thought it might be better to have at least a functional timer although the database part isn't done yet.
