@@ -9,8 +9,6 @@
 #include "includes/import_qml_plugins.h"
 #include "QxOrm.h"
 #include "database/database.h"
-#include "explorer.h"
-#include <QTreeView>
 #include "includes/mainhelp.h"
 #include "includes/setFocusPeriod.h"
 #include <iostream>

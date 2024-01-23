@@ -22,7 +22,17 @@ Rectangle {
     property int currentLineNumber: -1
     property int rowHeight: Math.ceil(fontMetrics.lineSpacing)
 
+    property var renderer
+
     color: Colors.background
+
+    signal render(var note);
+
+    onRender: (note) => {
+        renderer.text = controller.renderHtml(note);
+        // render.loadHtml(controller.renderHtml(note));
+        // render.reload();
+    }
 
     onWidthChanged: textArea.update()
     onHeightChanged: textArea.update()
@@ -36,7 +46,8 @@ Rectangle {
             root.currentNoteId = id
             root.currentNoteTitle = title
             textArea.text = content
-            console.log("onNoteOpened", id, title, content)
+            root.render(content);
+
         }
 
         onNoteCreated: (id, title, content) => {
@@ -45,7 +56,7 @@ Rectangle {
             textArea.text = content
             ExplorerModel.generate_model()
             explorer.reset()
-            console.log("onNoteCreated", id, title, content)
+            root.render(content);
         }
     }
 

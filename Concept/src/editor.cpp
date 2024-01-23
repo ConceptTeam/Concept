@@ -3,6 +3,7 @@
 #include "precompiled.h"
 #include "database/notes.h"
 #include "errors.h"
+#include "maddy/parser.h"
 
 ConceptEditor::ConceptEditor(QObject *parent) : QObject(parent) {}
 
@@ -41,7 +42,7 @@ void ConceptEditor::createNote() {
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                                         | QDialogButtonBox::Cancel);
     QLabel * title = new QLabel("Create a new note");
-    
+
     QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
     QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
 
@@ -49,7 +50,7 @@ void ConceptEditor::createNote() {
     vbox->addWidget(name);
     vbox->addWidget(buttonBox);
     vbox->addWidget(title);
-    
+
     d->setLayout(vbox);
 
     int result = d->exec();
@@ -70,4 +71,24 @@ void ConceptEditor::createNote() {
 
         emit noteCreated(note->id, note->title, note->content);
     }
+}
+
+QString ConceptEditor::renderHtml(QString note) {
+    QTextDocument textDocument;
+    textDocument.setMarkdown(note);
+    std::stringstream markdownInput(textDocument.toHtml().toStdString());
+
+    std::shared_ptr<maddy::ParserConfig> config = std::make_shared<maddy::ParserConfig>();
+
+    config->enabledParsers = maddy::types::NONE;
+    config->enabledParsers |= maddy::types::CODE_BLOCK_PARSER;
+    config->enabledParsers |= maddy::types::LATEX_BLOCK_PARSER;
+    config->enabledParsers |= maddy::types::IMAGE_PARSER;
+
+    std::shared_ptr<maddy::Parser> parser = std::make_shared<maddy::Parser>(config);
+    std::string htmlOutput = parser->Parse(markdownInput);
+
+    qDebug() << QString::fromStdString(htmlOutput);
+
+    return QString::fromStdString(htmlOutput);
 }

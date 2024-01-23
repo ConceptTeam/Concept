@@ -12,7 +12,6 @@ set(CMAKE_AUTORCC ON)
 include_directories(includes)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickControls2 Svg)
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Widgets QuickControls2 Svg)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
@@ -32,7 +31,6 @@ qt_add_executable(ConceptApp
     includes/database/notes.h src/database/notes.cpp
     includes/database/folders.h src/database/folders.cpp
     includes/database/focus_time.h src/database/focus_time.cpp
-    includes/timer.h src/timer.cpp
     includes/database/database.h
     includes/errors.h
 )
@@ -45,12 +43,6 @@ target_compile_definitions(ConceptApp PRIVATE -D_BUILDING_QX_CONCEPTAPP)
 if(COMMAND target_precompile_headers)
     target_precompile_headers(ConceptApp PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/includes/precompiled.h)
 endif() # (COMMAND target_precompile_headers)
-
-qt_add_resources(ConceptApp "configuration"
-    PREFIX "/"
-    FILES
-        qtquickcontrols2.conf
-)
 
 target_link_libraries(ConceptApp PRIVATE
     Qt6::Core
