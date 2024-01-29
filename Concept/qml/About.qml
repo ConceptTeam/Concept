@@ -10,14 +10,14 @@ ApplicationWindow {
     width: 650
     height: 550
     flags: Qt.Window | Qt.FramelessWindowHint
-    color: Colors.surface1
+    color: "white"
 
     menuBar: CMenuBar {
         id: menuBar
 
         dragWindow: root
         implicitHeight: 30
-        infoText: "About Qt"
+        infoText: "About Concept Project"
     }
 
     Image {
@@ -28,7 +28,7 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.margins: 20
 
-        source: "icons/qt_logo.svg"
+        source: "icons/Conceptlogo.svg"
         sourceSize.width: 80
         sourceSize.height: 80
         fillMode: Image.PreserveAspectFit
@@ -44,7 +44,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 20
-
+        /*
         TextArea {
             selectedTextColor: Colors.textFile
             selectionColor: Colors.selection
@@ -62,6 +62,7 @@ ApplicationWindow {
                 Qt.openUrlExternally(link)
             }
         }
+        */
     }
 
     ResizeButton {
