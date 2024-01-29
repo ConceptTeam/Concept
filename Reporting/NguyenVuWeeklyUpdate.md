@@ -36,5 +36,15 @@ Working on several changes/updates:
 - Source: The codebase is taken from a Qt tutorial, which can be referred to for a deeper understanding: https://doc.qt.io/qtforpython-6/examples/example_quickcontrols_filesystemexplorer.html
 
 # Week 6:
-
 - Integrating the filesystem and database functionalities, enabling storage, retrieval, and editing of files.
+- Helping Alex on finish the word count feature of text, now we can count the number of words, numbers of characters, and number of non-whitespace characters in the text.
+
+# Week 7:
+- I and Hung decide to build a Markdown Editor for Concept. We are using the Maddy library to parse the Markdown to HTML. The editor is implemented in QML and C++.
+- Debugging with Peter on rename, delete, and create files.
+- Adding replace text once feature along side with replace all feature.
+
+# Week 8:
+- Refactor QML code to make it more readable and maintainable.
+- Fixing bugs with the filesystem and database functionalities.
+- Finish other features and complete the project.
