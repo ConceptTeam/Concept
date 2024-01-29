@@ -14,7 +14,7 @@ Rectangle {
     Rectangle {
         id: studyTimerBlock
         width: root.width
-        height: root.height * 0.30
+        height: root.height * 0.3
         anchors.top: root.top
         color: Colors.surface1
 
@@ -169,7 +169,6 @@ Rectangle {
         color: "#c4c8cc"
         Text {
             id: question
-            text: qsTr("See your progress here:")
             anchors.centerIn: parent
         }
     }
@@ -180,11 +179,6 @@ Rectangle {
         anchors.top: textQuestion.bottom
 
         color: "#c4c8cc"
-        Button{
-            id: statistics
-            text: "Statistics"
-            font.pixelSize: timerBlock.height * 0.15
-            anchors.centerIn: parent
-        }
+
     }
 }
