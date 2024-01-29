@@ -1,8 +1,7 @@
 # Concept
 This is the repository for the Concept WebApp project. Concept is a note-taking application that allow you to take notes in Markdown format and organize them in a file list structure. The application is written in C++ and use the Qt framework for the GUI. This project is a CMake project and it is available for Windows, Linux and MacOS.
 
-![Alt text](/qml/icons/Conceptlogo.svg)
-<img src="/Concept/qml/icons/Conceptlogo.svg">
+<img src="/Concept/qml/icons/Conceptlogo.svg" width="200">
 
 Different external libraries are used in this project:
 - QxOrm: is an **Object Relational Mapping** (ORM) and **Object Document Mapper** (ODM) database library for C++ Qt developers. [Homepage](https://www.qxorm.com/qxorm_en/home.html), [Github](https://github.com/QxOrm/QxOrm)
@@ -27,8 +26,7 @@ Requirements:
 - CMake 3.25
 - C++14
 
-
-For Qt Creator, just need to open the project in Qt Creator and build the project clicking on the build button. For the first build, it may took a while to download and build all the dependencies. To build the project, use the following commands.
+For Qt Creator, you just need to open the project in Qt Creator and build the project clicking on the build button. For the first build, it may took a while to download and build all the dependencies.
 
 # Members
 
