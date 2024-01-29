@@ -5,6 +5,8 @@
 #include <QJSEngine>
 #include <QJSValue>
 
+
+
 double calcVal = 0.0;
 bool divTrigger = false;
 bool multTrigger = false;
