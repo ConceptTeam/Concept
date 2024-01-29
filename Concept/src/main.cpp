@@ -91,6 +91,21 @@ int main(int argc, char *argv[])
         QSqlError dao = qx::dao::update_with_all_relation(note);
         qDebug() << dao.text();
     }
+	
+
+    if (qx::dao::count<calendarEvents>() > 0)
+    {
+	std::vector<calendarEvents> listEvents;
+        QSqlError dao = qx::dao::fetch_all(listEvents);
+	for(calendarEvents e : listEvents){
+		qDebug() << e.id ;
+		if(e.id == 0){
+        	QSqlError dao = qx::dao::delete_by_id(e);
+	    }
+
+	}
+    }
+    qDebug() << "The number of calendarEvents is: " << qx::dao::count<calendarEvents>() ; 
     
     // checking if timerElements is being stored in the database.
     if (qx::dao::count<timerElements>() == 0) {
@@ -98,9 +113,6 @@ int main(int argc, char *argv[])
     } else {
 	qDebug() << " TIMER ELEMENTS FOUND " << "\n";
 	}
-
-
-
 
     set_qt_environment();
 
