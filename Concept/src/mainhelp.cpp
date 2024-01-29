@@ -94,14 +94,12 @@ StudyTimer::StudyTimer(QWidget *parent) : QDialog(parent){
     timerList->addItem("Start/Stop");
     timerList->addItem("Break");
     timerList->addItem("Continue");
-    timerList->addItem("Statistics");
 
-    timerFeatExplained["Where?"] = "Collumn on the right!";
+    timerFeatExplained["Where?"] = "Light Bulb on the Side Bar!";
     timerFeatExplained["Set Focus Period"] = "Choose the period you want to \nfocus for and press Start.";
     timerFeatExplained["Start/Stop"] = "Start or Stop the timer.";
     timerFeatExplained["Break"] = "Stop the timer to take a break.";
     timerFeatExplained["Continue"] = "Start the timer again after \nthe break, continues the time.";
-    timerFeatExplained["Statistics"] = "See your progress!";
 
     timerFeatureLabel = new QLabel("", this);
 
