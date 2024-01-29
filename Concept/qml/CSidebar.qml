@@ -125,7 +125,7 @@ Rectangle {
                     calendarItem.showCalendar();
                 }
             }
-            /*
+
             SidebarEntry {
                 id: timerTab
                 icon.source: "icons/light_bulb.svg"
@@ -136,7 +136,7 @@ Rectangle {
                     visible: timerTab.hovered
                 }
             }           
-            */
+
             SidebarEntry {
                 id: searchTab
                 icon.source: "icons/search.svg"
