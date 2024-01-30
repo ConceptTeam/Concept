@@ -164,13 +164,13 @@ void SearchDialog::onGlobalSearch()
         if (note->title.contains(keyword))
         {
             QString notePath;
-            if (note->folder == NULL)
+            if (note->folder != nullptr)
             {
-                notePath = "root/" + note->title;
+                notePath = note->folder->name + "/" + note->title;
             }
             else
             {
-                notePath = note->folder->name + "/" + note->title; // THIS DOES NOT WORK PROPERLY, THERE IS A PROBLEM WITH THE POINTER
+                notePath = "root/" + note->title;
             }
             titleOccurrences.append(notePath);
         }
@@ -185,7 +185,9 @@ void SearchDialog::onGlobalSearch()
                 int start = std::max(0, index - 10);
                 int end = std::min(lines[i].length(), index + keyword.length() + 10);
                 QString substring = lines[i].mid(start, end - start);
-                contentOccurrences.append(note->folder->name + "/" + note->title + ", Line " + QString::number(i + 1) + ":\n  '" + substring + "'");
+
+                QString location = (note->folder != nullptr) ? note->folder->name + "/" + note->title : "root/" + note->title;
+                contentOccurrences.append(location + ", Line " + QString::number(i + 1) + ":\n  '" + substring + "'");
             }
         }
     }
