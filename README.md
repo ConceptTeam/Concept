@@ -35,3 +35,5 @@ For Qt Creator, you just need to open the project in Qt Creator and build the pr
 | Name | Github username | Trello username | Role |
 | ---- | --------------- | --------------- | ---- |
 | Nguyen Vu | nnguyenu | Nguyen Vu Hoang | Member |
+| Bruno Iorio | bruno-iorio | Bruno Iorio | GUI and Database integration |
+
