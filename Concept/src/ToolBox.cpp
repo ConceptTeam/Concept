@@ -39,7 +39,11 @@ ToolBox::ToolBox(QQuickItem *parent) : QQuickItem(parent)
     connect(closeReplaceButton, &QPushButton::clicked, replaceDialog, &QDialog::close);
 }
 
-ToolBox::~ToolBox() {}
+ToolBox::~ToolBox()
+{
+    // Should delete all children objects and handle memory leakage for the whole file
+    delete replaceDialog;
+}
 
 void ToolBox::handleSearchAction(const QString &content, bool global)
 {

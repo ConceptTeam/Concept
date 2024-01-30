@@ -6,7 +6,8 @@
 #include <QQuickItem>
 #include <QBoxLayout>
 
-MainHelp::MainHelp(QQuickItem *parent) : QQuickItem(parent) {
+MainHelp::MainHelp(QQuickItem *parent) : QQuickItem(parent)
+{
     QAction *helpAction1 = new QAction("File - View - Format", this);
     QAction *helpAction2 = new QAction("Notebooks", this);
     QAction *helpAction3 = new QAction("Study Timer", this);
@@ -19,71 +20,72 @@ MainHelp::MainHelp(QQuickItem *parent) : QQuickItem(parent) {
     connect(helpAction4, &QAction::triggered, this, &MainHelp::handleHelpAction4);
     connect(helpAction5, &QAction::triggered, this, &MainHelp::handleHelpAction5);
 
-
-
     helpMenu.addAction(helpAction1);
     helpMenu.addAction(helpAction2);
     helpMenu.addAction(helpAction3);
     helpMenu.addAction(helpAction4);
     helpMenu.addAction(helpAction5);
-
-
 }
 
-void MainHelp::showHelpMenu() {
+void MainHelp::showHelpMenu()
+{
     // Show the context menu at the current cursor position
     helpMenu.exec(QCursor::pos());
 }
 
-void MainHelp::handleHelpAction2() {
+void MainHelp::handleHelpAction2()
+{
     qDebug() << "Help Text 2 clicked!";
 
     HelpNotebooks *helpNotebooks = new HelpNotebooks();
-    helpNotebooks->exec();  // Use exec() for a modal dialog
+    helpNotebooks->exec(); // Use exec() for a modal dialog
 
     // Cleanup the dialog when done
     delete helpNotebooks;
 }
 
-void MainHelp::handleHelpAction3() {
+void MainHelp::handleHelpAction3()
+{
     qDebug() << "Help Text 3 clicked!";
 
     StudyTimer *studyTimer = new StudyTimer();
-    ~studyTimer -> exec();
-
-
+    ~studyTimer->exec();
 }
 
-void MainHelp::handleHelpAction4() {
+void MainHelp::handleHelpAction4()
+{
     qDebug() << "Help Text 4 clicked!";
 
     HelpGlobalSearch *helpGlobalSearch = new HelpGlobalSearch();
-    ~helpGlobalSearch -> exec();
+    ~helpGlobalSearch->exec();
 }
 
-
-void MainHelp::handleHelpAction5() {
+void MainHelp::handleHelpAction5()
+{
     qDebug() << "Help Text 5 clicked!";
 
     Replace *replace = new Replace();
-    ~replace -> exec();
+    ~replace->exec();
 }
 
-MainHelp::~MainHelp() {
+MainHelp::~MainHelp()
+{
     // Perform cleanup or resource release here, if needed
 }
 
-void MainHelp::handleHelpAction1() {
+void MainHelp::handleHelpAction1()
+{
     qDebug() << "File";
 
     HelpDialog1 *helpDialog1 = new HelpDialog1();
-    helpDialog1->exec();  // Use exec() for a modal dialog
+    helpDialog1->exec(); // Use exec() for a modal dialog
 
     // Cleanup the dialog when done
     delete helpDialog1;
 }
 
-StudyTimer::StudyTimer(QWidget *parent) : QDialog(parent){
+StudyTimer::StudyTimer(QWidget *parent) : QDialog(parent)
+{
     setWindowTitle("Study Timer Help");
 
     featuresTimer = new QLabel("Features:", this);
@@ -115,19 +117,23 @@ StudyTimer::StudyTimer(QWidget *parent) : QDialog(parent){
 
     // Connect the itemClicked signal to the custom slot
     connect(timerList, &QListWidget::itemClicked, this, &StudyTimer::timer_selected);
-
 }
 
-void StudyTimer::timer_selected(QListWidgetItem *item){
+void StudyTimer::timer_selected(QListWidgetItem *item)
+{
     QString feature = item->text();
-    if (timerFeatExplained.contains(feature)) {
+    if (timerFeatExplained.contains(feature))
+    {
         timerFeatureLabel->setText(timerFeatExplained[feature]);
-    } else {
+    }
+    else
+    {
         timerFeatureLabel->setText("");
     }
 }
 
-HelpDialog1::HelpDialog1(QWidget *parent) : QDialog(parent) {
+HelpDialog1::HelpDialog1(QWidget *parent) : QDialog(parent)
+{
     setWindowTitle("Help File");
 
     // Create and setup UI components
@@ -144,7 +150,6 @@ HelpDialog1::HelpDialog1(QWidget *parent) : QDialog(parent) {
     featuresList->addItem("Search");
     featuresList->addItem("Exit");
 
-
     // Populate the feature explanations map
     featureExplanations["Save Note"] = "This feature saves the note into the \nNotebooks section.";
     featureExplanations["New Note"] = "This feature creates a new note in the current \ntext editor, while still adding it to the \nNotebooks section.";
@@ -153,7 +158,6 @@ HelpDialog1::HelpDialog1(QWidget *parent) : QDialog(parent) {
     featureExplanations["Toggle Expand Path"] = "This feature expands all \npaths in the current file.";
     featureExplanations["Exit"] = "Closes the whole app.";
     featureExplanations["Search"] = "Search a keyword in the current \ntext editor.";
-
 
     // Create a QLabel for displaying feature explanations
     featureExplanationLabel = new QLabel("", this);
@@ -173,26 +177,39 @@ HelpDialog1::HelpDialog1(QWidget *parent) : QDialog(parent) {
     connect(featuresList, &QListWidget::itemClicked, this, &HelpDialog1::onFeatureItemSelected);
 }
 
-StudyTimer::~StudyTimer(){
-
+StudyTimer::~StudyTimer()
+{
+    delete featuresTimer;
+    delete timerList;
+    delete timerFeatureLabel;
+    delete closeTimer;
 }
 
-void HelpDialog1::onFeatureItemSelected(QListWidgetItem *item) {
+void HelpDialog1::onFeatureItemSelected(QListWidgetItem *item)
+{
     // Update the explanation label based on the selected feature
     QString feature = item->text();
-    if (featureExplanations.contains(feature)) {
+    if (featureExplanations.contains(feature))
+    {
         featureExplanationLabel->setText(featureExplanations[feature]);
-    } else {
+    }
+    else
+    {
         featureExplanationLabel->setText("");
     }
 }
 
-HelpDialog1::~HelpDialog1() {
-    // Perform cleanup or resource release here, if needed
+HelpDialog1::~HelpDialog1()
+{
+    delete titleLabel;
+    delete featuresLabel;
+    delete featuresList;
+    delete featureExplanationLabel;
+    delete closeButton;
 }
 
-
-HelpNotebooks::HelpNotebooks(QWidget *parent) : QDialog(parent) {
+HelpNotebooks::HelpNotebooks(QWidget *parent) : QDialog(parent)
+{
     setWindowTitle("Help Notebooks");
 
     // Create and setup UI components
@@ -204,17 +221,18 @@ HelpNotebooks::HelpNotebooks(QWidget *parent) : QDialog(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(titleNotebooks);
     layout->addWidget(featuresNotebooks);
-    //layout->addWidget(featuresList);
-    //layout->addWidget(featureExplanationLabel);
+    // layout->addWidget(featuresList);
+    // layout->addWidget(featureExplanationLabel);
     layout->addWidget(closeButton2);
 
     connect(closeButton2, &QPushButton::clicked, this, &HelpNotebooks::close);
 
     // Connect the itemClicked signal to the custom slot
-    //connect(featuresList, &QListWidget::itemClicked, this, &HelpDialog1::onFeatureItemSelected);
+    // connect(featuresList, &QListWidget::itemClicked, this, &HelpDialog1::onFeatureItemSelected);
 }
 
-HelpGlobalSearch::HelpGlobalSearch(QWidget *parent) : QDialog(parent) {
+HelpGlobalSearch::HelpGlobalSearch(QWidget *parent) : QDialog(parent)
+{
     setWindowTitle("Help Global Search");
 
     // Create and setup UI components
@@ -226,25 +244,32 @@ HelpGlobalSearch::HelpGlobalSearch(QWidget *parent) : QDialog(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(titleGSearch);
     layout->addWidget(featuresGSearch);
-    //layout->addWidget(featuresList);
-    //layout->addWidget(featureExplanationLabel);
+    // layout->addWidget(featuresList);
+    // layout->addWidget(featureExplanationLabel);
     layout->addWidget(closeGSearch);
 
     connect(closeGSearch, &QPushButton::clicked, this, &HelpGlobalSearch::close);
 
     // Connect the itemClicked signal to the custom slot
-    //connect(featuresList, &QListWidget::itemClicked, this, &HelpDialog1::onFeatureItemSelected);
+    // connect(featuresList, &QListWidget::itemClicked, this, &HelpDialog1::onFeatureItemSelected);
 }
 
-HelpGlobalSearch::~HelpGlobalSearch(){}
-
-
-
-HelpNotebooks::~HelpNotebooks() {
-
+HelpGlobalSearch::~HelpGlobalSearch()
+{
+    delete titleGSearch;
+    delete featuresGSearch;
+    delete closeGSearch;
 }
 
-Replace::Replace(QWidget *parent) : QDialog(parent) {
+HelpNotebooks::~HelpNotebooks()
+{
+    delete titleNotebooks;
+    delete featuresNotebooks;
+    delete closeButton2;
+}
+
+Replace::Replace(QWidget *parent) : QDialog(parent)
+{
     setWindowTitle("Help Replace");
 
     // Create and setup UI components
@@ -261,7 +286,6 @@ Replace::Replace(QWidget *parent) : QDialog(parent) {
     featuresListReplace->addItem("Replace All");
     featuresListReplace->addItem("Replacing");
 
-
     // Populate the feature explanations map
     featureExplanationsReplace["Where:"] = "Find it in the Format menu!";
     featureExplanationsReplace["Keyword"] = "Enter any keyword you \nwant to find.";
@@ -270,7 +294,6 @@ Replace::Replace(QWidget *parent) : QDialog(parent) {
     featureExplanationsReplace["Replace All"] = "Choose to replace all \nappearences of your keyword.";
     featureExplanationsReplace["Replacing"] = "The replacing happens \n automatically, you just need \nto save the changes.";
     featureExplanationsReplace["Search"] = "Search up the word \nin the current editor.";
-
 
     // Create a QLabel for displaying feature explanations
     featureExplanationReplace = new QLabel("", this);
@@ -290,15 +313,25 @@ Replace::Replace(QWidget *parent) : QDialog(parent) {
     connect(featuresListReplace, &QListWidget::itemClicked, this, &Replace::onSelected);
 }
 
-Replace::~Replace(){}
+Replace::~Replace()
+{
+    delete titleReplace;
+    delete featuresReplace;
+    delete featuresListReplace;
+    delete featureExplanationReplace;
+    delete closeReplace;
+}
 
-void Replace::onSelected(QListWidgetItem *item) {
+void Replace::onSelected(QListWidgetItem *item)
+{
     // Update the explanation label based on the selected feature
     QString feature = item->text();
-    if (featureExplanationsReplace.contains(feature)) {
+    if (featureExplanationsReplace.contains(feature))
+    {
         featureExplanationReplace->setText(featureExplanationsReplace[feature]);
-    } else {
+    }
+    else
+    {
         featureExplanationReplace->setText("");
     }
 }
-

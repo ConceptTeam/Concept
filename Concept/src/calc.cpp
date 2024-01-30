@@ -93,7 +93,28 @@ Calc::Calc(QWidget *parent) : QDialog(parent)
     setLayout(layout);
 }
 
-Calc::~Calc(){};
+Calc::~Calc()
+{
+    delete display;
+    for (int i = 0; i < 10; ++i)
+    {
+        delete numButtons[i];
+    }
+    delete addButton;
+    delete subtractButton;
+    delete multiplyButton;
+    delete divideButton;
+    delete equalsButton;
+    delete changeSignButton;
+    delete clearButton;
+    delete allClearButton;
+    delete closeButton;
+    delete dotButton;
+    delete openParenButton;
+    delete squareButton;
+    delete powerButton;
+    delete closeParenButton;
+}
 
 void Calc::NumPressed()
 {
