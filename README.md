@@ -38,7 +38,7 @@ For Qt Creator, you just need to open the project in Qt Creator and build the pr
 | Marta Teodora Trales | MartaTeo | martateodoratrales | Leader |
 | Minh Hung Tran | hung3a8 | hung3a8 | Git Leader |
 | Nguyen Vu | nnguyenu | Nguyen Vu Hoang | Member |
-| Bruno Iorio | bruno-iorio | Bruno Iorio | Member |
+| Bruno Iorio | bruno-iorio | brunoiorio | Member |
 | Klaara Huima | klaarahuima | klaarahuima1 | Member |
 | Maxime Despréaux | MaximeDespreaux | maximedespreaux | Member |
 | Alexandre Bismuth | alexandre-bismuth | alexbismuth2 | Member |
