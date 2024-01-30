@@ -92,56 +92,59 @@ if (engine.rootObjects().isEmpty())
 app->exec();
 }
 
+
 void timerStart::chooseTime(int minutes) {
 
     if (started) {
         emit timerFinished();
     }
-    timer = CountDownTimer(0, minutes, 0);
-    timer.countdowntimer = 1;
-    time_string = createTimeString(timer.hour, timer.minute, timer.second);
+    delete timer;
+    timer = new CountDownTimer(0, minutes, 0);
+    timer->countdowntimer = 1;
+    time_string = createTimeString(timer->hour, timer->minute, timer->second);
     emit timeChanged();
 
 }
 
 void timerStart::startTheTimer() {
-    qDebug() << "starting timer";
+
 
     if (!started) {
-    timer.counting = 1;
-    started = 1;
-    start_time = get_time();
-    last_go_time = get_time(); }
+        qDebug() << "starting timer";
+        timer->counting = 1;
+        started = 1;
+        start_time = get_time();
+        last_go_time = get_time(); }
 
     else {
         //emit errorMessage();
     }
 }
 
-bool timerStart::update_time(Timer &tim) {
+bool timerStart::update_time(Timer *t) {
 
     // qDebug() << "updating time";
 
-    if (!tim.countdowntimer) {
-        if (tim.second != 59) {tim.second ++;}
-        else {tim.second = 0;
-            if (tim.minute != 59) {tim.minute ++;}
-            else {tim.minute = 0;
-                tim.hour ++;}
+    if (!t->countdowntimer) {
+    if (t->second != 59) {t->second ++;}
+    else {t->second = 0;
+        if (t->minute != 59) {t->minute ++;}
+        else {t->minute = 0;
+            t->hour ++;}
         }   
     } else {
-        if (tim.second != 0) {tim.second --;}
-        else {tim.second = 59;
-            if (tim.minute != 0) {tim.minute --;}
-            else {tim.minute = 59;
-                tim.hour --;}
+        if (t->second != 0) {t->second --;}
+        else {t->second = 59;
+        if (t->minute != 0) {t->minute --;}
+        else {t->minute = 59;
+            t->hour --;}
         }
     }
 
-    time_string = createTimeString(tim.hour, tim.minute, tim.second);
+    time_string = createTimeString(t->hour, t->minute, t->second);
     emit timeChanged();
 
-    if (tim.second == 0 && tim.minute == 0 && tim.hour == 0) {
+    if (t->second == 0 && t->minute == 0 && t->hour == 0) {
         qDebug() << "timer zeroed";
         // if (break_timer.counting) {
         //     break_timer.counting = 0;
@@ -151,10 +154,10 @@ bool timerStart::update_time(Timer &tim) {
         // } else {
         //     emit timerFinished();
         // }
-        tim.counting = 0;
+        t->counting = 0;
     }
 
-    return tim.counting;
+    return t->counting;
 }
 
 void timerStart::qTimerTimeout () {
@@ -162,23 +165,30 @@ void timerStart::qTimerTimeout () {
     // qDebug() << "qTimerTimeout";
     // qDebug() << "timer.counting: " << timer.counting;
 
-    if (timer.counting) {
-        timer.counting = update_time(timer);
+    if (timer->counting) {
+        timer->counting = update_time(timer);
     }
 
-    if (break_timer.counting) {
-        break_timer.counting = update_time(break_timer);
-        if (break_timer.counting == 0) {
+    else if (break_timer->counting) {
+        break_timer->counting = update_time(break_timer);
+        if (break_timer->counting == 0) {
             qDebug() << "break timer finished";
             if (!started) {
                 emit timerFinished();
             } else {
                 continueTimer();
             }
-            break_timer = CountUpTimer();
-            time_string = createTimeString(timer.hour, timer.minute, timer.second);
-            emit timeChanged();        }
+            delete break_timer;
+            break_timer = new CountUpTimer();
+            set_time_string(timer);       }
     }
+
+    else if (started) {
+        emit timerFinished();
+    }
+
+
+
 }
 
 void timerStart::showTimeMenu() {
@@ -191,32 +201,32 @@ void timerStart::showBreakMenu() {
 
 void timerStart::chooseBreak(int s, int m) {
     pauseTimer();
-    break_timer = CountDownTimer(s, m, 0);
-    break_timer.counting = 1;
-    time_string = createTimeString(break_timer.hour, break_timer.minute, break_timer.second);
-    emit timeChanged();
+    delete break_timer;
+    break_timer = new CountDownTimer(s, m, 0);
+    break_timer->counting = 1;
+    set_time_string(break_timer);
 
     if (started == 0) {
-        last_stop_time = timer.get_time();
+        last_stop_time = get_time();
     }
 }
 
 void timerStart::chooseBreakUntil() {
     pauseTimer();
-    break_timer = CountUpTimer();
-    break_timer.counting = 1;
-    time_string = createTimeString(break_timer.hour, break_timer.minute, break_timer.second);
-    emit timeChanged();
+    delete break_timer;
+    break_timer = new CountUpTimer();
+    break_timer->counting = 1;
+    set_time_string(break_timer);
 
     if (started == 0) {
-        last_stop_time = timer.get_time();
+        last_stop_time = get_time();
     }
 }
 
 void timerStart::pauseTimer() {
 
     if (started) {
-    timer.counting = 0;
+        timer->counting = 0;
     last_stop_time = get_time();
     total_focus_time += difftime(last_stop_time, last_go_time);
     paused = 1;
@@ -227,19 +237,18 @@ void timerStart::pauseTimer() {
 
 void timerStart::continueTimer() {
 
-    if (!timer.counting) {
+    if (!timer->counting) {
 
         if (started) {
-        timer.counting = 1;
+            timer->counting = 1;
         last_go_time = get_time();
         total_break_time += difftime(last_go_time, last_stop_time);
         paused = 0; }
 
-        if (break_timer.counting) {
-            break_timer.counting = 0;
-            break_timer = CountUpTimer();
-            time_string = createTimeString(timer.hour, timer.minute, timer.second);
-            emit timeChanged();
+        if (break_timer->counting) {
+        delete break_timer;
+        break_timer = new CountUpTimer();
+        set_time_string(timer);
         }
 
         }
@@ -251,7 +260,7 @@ void timerStart::stopTimer() {
 
 void timerStart::onTimerFinished() {
 
-        finishing_time = timer.get_time();
+        finishing_time = get_time();
 
         if (started) {
 
@@ -262,7 +271,7 @@ void timerStart::onTimerFinished() {
             }
         }
         
-        else if (break_timer.countdowntimer) {
+        else if (break_timer->countdowntimer) {
             total_break_time = difftime(finishing_time, last_stop_time);
             total_focus_time = 0;
         }
@@ -275,24 +284,23 @@ void timerStart::onTimerFinished() {
         qDebug() << "focus: " << total_focus_time;
         qDebug() << "break: " << total_break_time;
 
-        started = 0;
-        timer.counting = 0;
-        break_timer.counting = 0;
-        timer = CountUpTimer();
-        break_timer = CountUpTimer();
-        time_string = createTimeString(0,0,0);
-        emit timeChanged();
+
 
         //store total_focus_time and total_break_time here
-	timerElements timerStats = timerElements();
+        timerElements timerStats = timerElements();
 
-	timerStats.totalFocusTime = total_focus_time;
-	timerStats.totalBreakTime = total_break_time;
-	timerStats.startTime = start_time;
+        timerStats.totalFocusTime = total_focus_time;
+        timerStats.totalBreakTime = total_break_time;
+        timerStats.startTime = start_time;
         QSqlError daoError = qx::dao::insert(timerStats);
 
-
+        started = 0;
         paused = 0;
+        delete timer;
+        delete break_timer;
+        timer = new CountUpTimer();
+        break_timer = new CountUpTimer();
+        set_time_string(timer);
         total_focus_time = 0;
         total_break_time = 0;
         last_go_time = get_time();

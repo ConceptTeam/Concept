@@ -31,8 +31,8 @@ public:
 
     timerStart(QObject *parent = nullptr);
 
-    Timer timer = CountUpTimer();
-    Timer break_timer = CountUpTimer();
+    Timer *timer = new CountUpTimer();
+    Timer *break_timer = new CountUpTimer();
 
     QString time_string = "00:00";
 
@@ -76,11 +76,17 @@ private:
         return currentTime_t;
     } 
 
-    bool update_time(Timer &timer);
+    bool update_time(Timer *timer);
+
+    void set_time_string(Timer *timer) {
+        time_string = createTimeString(timer->hour, timer->minute, timer->second);
+        emit timeChanged();
+    }
+
 
     QString createTimeString(int hours, int minutes, int seconds) {
         QString timeString = "";
-        if (break_timer.counting) {
+        if (break_timer->counting) {
             timeString = "Break: ";
         }
         if (hours != 0) {
