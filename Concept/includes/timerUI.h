@@ -1,3 +1,4 @@
+
 //timerUI.h
 #ifndef TIMERUI_H
 #define TIMERUI_H
@@ -31,8 +32,8 @@ public:
 
     timerStart(QObject *parent = nullptr);
 
-    Timer timer = CountUpTimer();
-    Timer break_timer = CountUpTimer();
+    Timer *timer = new CountUpTimer();
+    Timer *break_timer = new CountUpTimer();
 
     QString time_string = "00:00";
 
@@ -74,13 +75,19 @@ private:
         std::chrono::system_clock::time_point currentTime = std::chrono::system_clock::now();
         time_t currentTime_t = std::chrono::system_clock::to_time_t(currentTime);
         return currentTime_t;
-    } 
+    }
 
-    bool update_time(Timer &timer);
+    bool update_time(Timer *timer);
+
+    void set_time_string(Timer *timer) {
+        time_string = createTimeString(timer->hour, timer->minute, timer->second);
+        emit timeChanged();
+    }
+
 
     QString createTimeString(int hours, int minutes, int seconds) {
         QString timeString = "";
-        if (break_timer.counting) {
+        if (break_timer->counting) {
             timeString = "Break: ";
         }
         if (hours != 0) {
@@ -89,7 +96,7 @@ private:
             timeString += QString("%1:%2").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
         }
         return timeString;
-        }
+    }
 
 
 
