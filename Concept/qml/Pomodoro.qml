@@ -170,34 +170,20 @@ Rectangle {
         Button {
             id: statsButton
             text: "Stats"
-            anchors.fill: parent
-            font.pixelSize: buttonContainer.height * 0.5
+            anchors.centerIn: parent
+            font.pixelSize: timerBlock.height * 0.15
             onClicked: {
-                statsWindow.openWindow() // Ensure this matches the context property name in C++
+                statsWindow.openWindow() 
             }
         }
     }
 
 
     Rectangle {
-        id: textQuestion
         width: root.width
         height: root.height * 0.05
-        anchors.top: button3.bottom
+        anchors.top: buttonContainer.bottom
 
         color: "#c4c8cc"
-        Text {
-            id: question
-            anchors.centerIn: parent
-        }
-    }
-    Rectangle{
-        id: button4
-        width: root.width
-        height: root.height * 0.05
-        anchors.top: textQuestion.bottom
-
-        color: "#c4c8cc"
-
     }
 }
