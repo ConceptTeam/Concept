@@ -261,7 +261,7 @@ void timerStart::onTimerFinished() {
             total_break_time += difftime(finishing_time, last_stop_time);
             }
         }
-        
+
         else if (break_timer.countdowntimer) {
             total_break_time = difftime(finishing_time, last_stop_time);
             total_focus_time = 0;
@@ -284,11 +284,11 @@ void timerStart::onTimerFinished() {
         emit timeChanged();
 
         //store total_focus_time and total_break_time here
-	timerElements timerStats = timerElements();
+    timerElements timerStats = timerElements();
 
-	timerStats.totalFocusTime = total_focus_time;
-	timerStats.totalBreakTime = total_break_time;
-	timerStats.startTime = start_time;
+    timerStats.totalFocusTime = total_focus_time;
+    timerStats.totalBreakTime = total_break_time;
+    timerStats.startTime = start_time;
         QSqlError daoError = qx::dao::insert(timerStats);
 
 

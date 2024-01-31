@@ -44,6 +44,8 @@ qt_add_executable(ConceptApp
     includes/todoItem.h
     src/todoList.cpp
     src/todoItem.cpp
+    includes/StatsWindow.h
+    src/StatsWindow.cpp
 )
 
 ## Configure QxOrm

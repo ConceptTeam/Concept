@@ -22,6 +22,7 @@
 #include <iostream>
 #include <vector>
 #include "includes/timerUI.h"
+#include "includes/StatsWindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -135,6 +136,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<MainHelp>("CustomControls", 1, 0, "MainHelp");
     qmlRegisterType<SetFocusPeriod>("CustomControls", 1, 0, "SetFocusPeriod");
     qmlRegisterType<timerStart>("CustomControls", 1, 0, "TimerStart");
+    qmlRegisterType<StatisticsWindow>("CustomControls", 1, 0, "StatisticsWindow");
+
+
+
 
 
     timerStart myTimerStart;
@@ -197,6 +202,13 @@ int main(int argc, char *argv[])
                      {
                          helpNotebooks.show(); // You can use show() instead of exec() for modeless dialog
                      });
+
+
+    //Stats
+    StatisticsWindow statsWindow;
+    statsWindow.initializeWindow();
+    engine.rootContext()->setContextProperty("statsWindow", &statsWindow);
+
 
     if (engine.rootObjects().isEmpty())
     {

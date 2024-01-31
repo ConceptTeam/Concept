@@ -161,6 +161,25 @@ Rectangle {
         }
     }
     Rectangle {
+        id: buttonContainer
+        width: root.width
+        height: root.height * 0.05
+        color: "#c4c8cc"
+        anchors.top: button3.bottom
+
+        Button {
+            id: statsButton
+            text: "Stats"
+            anchors.fill: parent
+            font.pixelSize: buttonContainer.height * 0.5
+            onClicked: {
+                statsWindow.openWindow() // Ensure this matches the context property name in C++
+            }
+        }
+    }
+
+
+    Rectangle {
         id: textQuestion
         width: root.width
         height: root.height * 0.05
