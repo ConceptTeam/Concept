@@ -3,14 +3,33 @@
 #include <QSqlError>
 #include <QDateTime>
 
+
+
+
+
 StatisticsWindow::StatisticsWindow(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
+
+    // Styling the labels
+    QString labelStyle = "QLabel { "
+                         "font-family: 'Arial'; "
+                         "font-size: 18px; "
+                         "color: #F01E2C;"
+                         "margin: 5px 0;"
+                         "}";
 
     totalTimeEverLabel = new QLabel(this);
     totalTimeTodayLabel = new QLabel(this);
     totalTimeLastWeekLabel = new QLabel(this);
     averagePerDayLastWeekLabel = new QLabel(this);
     increaseComparedToYesterdayLabel = new QLabel(this);
+
+    // Applying the stylesheet to each label
+    totalTimeEverLabel->setStyleSheet(labelStyle);
+    totalTimeTodayLabel->setStyleSheet(labelStyle);
+    totalTimeLastWeekLabel->setStyleSheet(labelStyle);
+    averagePerDayLastWeekLabel->setStyleSheet(labelStyle);
+    increaseComparedToYesterdayLabel->setStyleSheet(labelStyle);
 
     layout->addWidget(totalTimeEverLabel);
     layout->addWidget(totalTimeTodayLabel);
@@ -19,12 +38,15 @@ StatisticsWindow::StatisticsWindow(QWidget *parent) : QWidget(parent) {
     layout->addWidget(increaseComparedToYesterdayLabel);
 
     setLayout(layout);
+
+
 }
+
 
 void StatisticsWindow::initializeWindow() {
     // Now perform database operations or other initializations
     calculateStatistics();
-    // Any other initialization code that requires a fully set up application
+
 }
 
 void StatisticsWindow::calculateStatistics() {
