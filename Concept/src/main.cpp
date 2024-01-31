@@ -23,6 +23,8 @@
 #include <vector>
 #include "includes/timerUI.h"
 #include "includes/StatsWindow.h"
+#include "includes/Graph.h"
+
 
 int main(int argc, char *argv[])
 {

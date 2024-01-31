@@ -2,6 +2,11 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDateTime>
+#include <QVector>
+#include <QDate>
+
+
+#include "includes/Graph.h"
 
 
 
@@ -10,34 +15,43 @@
 StatisticsWindow::StatisticsWindow(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    // Styling the labels
+    // Initialize labels with styles and add them to the layout
     QString labelStyle = "QLabel { "
                          "font-family: 'Arial'; "
                          "font-size: 18px; "
-                         "color: #F01E2C;"
+                         "color: ##b38f4d;"
                          "margin: 5px 0;"
                          "}";
-
     totalTimeEverLabel = new QLabel(this);
-    totalTimeTodayLabel = new QLabel(this);
-    totalTimeLastWeekLabel = new QLabel(this);
-    averagePerDayLastWeekLabel = new QLabel(this);
-    increaseComparedToYesterdayLabel = new QLabel(this);
-
-    // Applying the stylesheet to each label
     totalTimeEverLabel->setStyleSheet(labelStyle);
-    totalTimeTodayLabel->setStyleSheet(labelStyle);
-    totalTimeLastWeekLabel->setStyleSheet(labelStyle);
-    averagePerDayLastWeekLabel->setStyleSheet(labelStyle);
-    increaseComparedToYesterdayLabel->setStyleSheet(labelStyle);
 
     layout->addWidget(totalTimeEverLabel);
+
+    totalTimeTodayLabel = new QLabel(this);
+    totalTimeTodayLabel->setStyleSheet(labelStyle);
     layout->addWidget(totalTimeTodayLabel);
+
+    totalTimeLastWeekLabel = new QLabel(this);
+    totalTimeLastWeekLabel->setStyleSheet(labelStyle);
     layout->addWidget(totalTimeLastWeekLabel);
+
+    averagePerDayLastWeekLabel = new QLabel(this);
+    averagePerDayLastWeekLabel->setStyleSheet(labelStyle);
     layout->addWidget(averagePerDayLastWeekLabel);
+
+    increaseComparedToYesterdayLabel = new QLabel(this);
+    increaseComparedToYesterdayLabel->setStyleSheet(labelStyle);
     layout->addWidget(increaseComparedToYesterdayLabel);
 
+    // Initialize and add the GraphWidget to the layout
+    graphWidget = new GraphWidget(this);
+    graphWidget->setFixedSize(400, 300);
+    layout->addWidget(graphWidget);
+
     setLayout(layout);
+
+
+
 
 
 }
@@ -50,9 +64,14 @@ void StatisticsWindow::initializeWindow() {
 }
 
 void StatisticsWindow::calculateStatistics() {
+
+
+
+
     double totalTimeEver = 0.0, totalTimeToday = 0.0, totalTimeLastWeek = 0.0;
     double averagePerDayLastWeek = 0.0, increaseComparedToYesterday = 0.0;
     QMap<QDate, double> dailyTimes;
+    QVector<double> studyTimeLastSevenDays(7, 0.0);
     QDate currentDate = QDate::currentDate();
     QDate weekAgo = currentDate.addDays(-7);
     QDate yesterday = currentDate.addDays(-1);
@@ -64,6 +83,18 @@ void StatisticsWindow::calculateStatistics() {
         qDebug() << "Error fetching timer data: " << daoError.text();
         return;
     }
+
+    for (const timerElements &element : listTimerElements) {
+        QDateTime startTime = QDateTime::fromSecsSinceEpoch(static_cast<qint64>(element.startTime));
+        QDate startDate = startTime.date();
+        int dayDiff = currentDate.daysTo(startDate);
+
+        if (dayDiff >= -1 && dayDiff <= 0) {
+            studyTimeLastSevenDays[dayDiff+6] += element.totalFocusTime;
+        }
+    }
+    graphWidget->setData(studyTimeLastSevenDays);
+
 
     for (const timerElements &element : listTimerElements) {
         QDateTime startTime = QDateTime::fromSecsSinceEpoch(static_cast<qint64>(element.startTime));
@@ -92,11 +123,13 @@ void StatisticsWindow::calculateStatistics() {
 void StatisticsWindow::displayStatistics(double totalTimeEver, double totalTimeToday,
                                          double totalTimeLastWeek, double averagePerDayLastWeek,
                                          double increaseComparedToYesterday) {
-    totalTimeEverLabel->setText("Total Study Time Ever: " + QString::number(totalTimeEver) + " seconds");
-    totalTimeTodayLabel->setText("Total Study Time Today: " + QString::number(totalTimeToday) + " seconds");
-    totalTimeLastWeekLabel->setText("Total Study Time Last Week: " + QString::number(totalTimeLastWeek) + " seconds");
-    averagePerDayLastWeekLabel->setText("Average Per Day (Last 7 Days): " + QString::number(averagePerDayLastWeek) + " seconds");
-    increaseComparedToYesterdayLabel->setText("Increase Compared to Yesterday: " + QString::number(increaseComparedToYesterday) + " seconds");
+
+    totalTimeEverLabel->setText("Total Study Time Ever: " + formatTime(totalTimeEver));
+    totalTimeTodayLabel->setText("Total Study Time Today: " + formatTime(totalTimeToday));
+    totalTimeLastWeekLabel->setText("Total Study Time Last Week: " + formatTime(totalTimeLastWeek));
+    averagePerDayLastWeekLabel->setText("Average Per Day (Last 7 Days): " + formatTime(averagePerDayLastWeek));
+    increaseComparedToYesterdayLabel->setText("Increase Compared to Yesterday: " + formatTime(increaseComparedToYesterday));
+    ;
 }
 
 
@@ -109,3 +142,6 @@ void StatisticsWindow::openWindow() {
     calculateStatistics();  // Recalculate stats each time the window is opened
     this->show();           // Show the statistics window
 }
+
+
+
